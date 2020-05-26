@@ -11,6 +11,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        sprite:{
+            type : cc.Sprite,
+            default: null,
+        }
         // foo: { 
         //     // ATTRIBUTES:
         //     default: null,        // The default value will be used only when the component attaching
@@ -33,7 +37,22 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        global.HTTP.SetUrl();
+
+        // this.load_remote();
+        global.HTTP.Get(global.CONFIG.url, function(response){
+            console.log("response", response)
+        });
+    },
+    
+    load_remote(){
+        cc.loader.load("http://07imgmini.eastday.com/mobile/20180916/20180916025438_9077fd04fa22975bf3d54fc6ccf66f44_1.jpeg", function(err, ret){
+            if (err){
+                console.log("错误:", err);
+                return;
+            }
+            this.sprite.spriteFrame.setTexture(ret);
+            //ret is cc.texture
+        }.bind(this))
     },
     // update (dt) {},
 });
