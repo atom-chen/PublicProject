@@ -42,6 +42,7 @@ cc.Class({
         global.HTTP.Get(global.CONFIG.url, function(response){
             console.log("response", response)
         });
+        //window.cmgr.Init();
     },
     
     load_remote(){
