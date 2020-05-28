@@ -11,7 +11,9 @@ export default class NewClass extends cc.Component {
     @property(cc.Sprite) sprite:cc.Sprite;
 
     start () {
-        this.load_remote();
+        // console.log("platform", cc.sys.platform)
+        // console.log("test", qq.getSystemInfo)
+        // this.load_remote();
         // HttpService.getInst().doGet(Config.url, null, null, gen_handler(function(code, response){
         //     console.log("回调:", code, response);
         // }, null, null));
