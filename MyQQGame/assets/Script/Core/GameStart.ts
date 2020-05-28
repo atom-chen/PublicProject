@@ -23,9 +23,13 @@ export default class NewClass extends cc.Component {
                 console.log("错误:", err);
                 return;
             }
-            this.sprite.spriteFrame.setTexture(ret);
-            //ret is cc.texture
-        }.bind(this))
-    },
+            
+            console.log("调用", ret)
+            //this.sprite.node.active = false
+            let frame = new cc.SpriteFrame(ret);
+            console.log(frame)
+            this.sprite.spriteFrame = frame;
+        }.bind(this));
+    }
     // update (dt) {}
 }
