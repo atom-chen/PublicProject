@@ -55,6 +55,11 @@ cc.Class({
         //首先监听右上角的按钮
         cc.Mgr.PlatformController.ShareTopNav();
         cc.Mgr.PlatformController.ShowClubButton(true);
+
+        //初始化登陆场景
+        var loginScene = require("LoginScene");
+        var loginSceneInstance = new loginScene();
+        loginSceneInstance.initLoginScene();
     },
 
     /*
