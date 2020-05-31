@@ -39,8 +39,15 @@ function initMgr(){
 
 cc.Class({
     extends: cc.Component,
+
     properties: {
-        
+        sprite: {
+            // ATTRIBUTES:
+            default: null,        // The default value will be used only when the component attaching
+                                  // to a node for the first time
+            type: cc.Sprite, // optional, default is typeof default
+           // serializable: true,   // optional, default is true
+        },
     },
 
     onLoad:function () {
@@ -48,7 +55,20 @@ cc.Class({
         //cc.sys.localStorage.clear();
         cc.director.GlobalEvent.clear();
         initMgr();
-        console.log("platform" + cc.Mgr.PlatformController.platform);
+        cc.loader.load("http://106.14.223.175:9000/0.0.0.1/1.jpg", function(err, ret){
+            if (err){
+                console.log("错误:", err);
+                return;
+            }
+            
+            console.log("调用", ret)
+            //this.sprite.node.active = false
+            let frame = new cc.SpriteFrame(ret);
+            console.log(frame)
+            this.sprite.spriteFrame = frame;
+        }.bind(this));
+
+        console.log("platform: " + cc.Mgr.PlatformController.platform);
     },
 
     start () {
