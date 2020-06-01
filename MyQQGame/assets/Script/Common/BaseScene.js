@@ -1,4 +1,5 @@
 var GameConst = require("GameConst");
+var UICanvas = require("Canvas");
 
 var BaseScene = cc.Class({
     extends: cc.Component,
@@ -13,16 +14,21 @@ var BaseScene = cc.Class({
     },
 
     InitCanvas: function(){
-        this.uiCanvas = cc.find("UICanvas");
         if (this.uiCanvas == null){
-            this.uiCanvas = cc.loader.loadRes("Prefabs/Common/UICanvas", cc.Prefab, function(err, uiCanvas){
-                uiCanvas.name = "UICanvas";
-            });
+            this.uiCanvas = new UICanvas();
         }
     },
 
-    OnDestroy: function(){
+    GetLayer: function(name){
+        return this.uiCanvas.Find(name);
+    },
 
+    PopModalPanel: function(sendInfo){},
+
+    CloseModalPanel: function(requestId, actionName){},
+
+    OnDestroy: function(){
+        
     },
 
     Destroy: function(){
@@ -30,3 +36,4 @@ var BaseScene = cc.Class({
     },
 
 });
+module.exports = BaseScene;
