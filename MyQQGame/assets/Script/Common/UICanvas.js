@@ -1,4 +1,3 @@
-var ResMgr = require("ResMgr");
 
 var UICanvas = cc.Class({
 

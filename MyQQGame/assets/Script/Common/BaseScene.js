@@ -1,5 +1,4 @@
-var GameConst = require("GameConst");
-var UICanvas = require("Canvas");
+var UICanvas = require("UICanvas");
 
 var BaseScene = cc.Class({
     extends: cc.Component,
