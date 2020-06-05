@@ -34,6 +34,9 @@ function initMgr(){
 
     var UserDataMgr = require("UserDataMgr");
     cc.Mgr.UserDataMgr = new UserDataMgr();
+
+    var EventMgr = require("EventMgr");
+    cc.Mgr.EventMgr = new EventMgr();
 }
 
 
@@ -53,7 +56,7 @@ cc.Class({
     onLoad:function () {
         //目前我们先不保存任何数据  每次开始清理一次
         //cc.sys.localStorage.clear();
-        cc.director.GlobalEvent.clear();
+        // cc.director.GlobalEvent.clear();
         initMgr();
         cc.loader.load("http://106.14.223.175:9000/0.0.0.1/1.jpg", function(err, ret){
             if (err){
