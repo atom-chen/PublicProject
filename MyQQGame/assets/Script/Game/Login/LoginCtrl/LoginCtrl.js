@@ -3,8 +3,7 @@ var LoginCtrl = cc.Class({
     extends: cc.Component,
 
     properties: {
-        userCount:"wangzhufeng",
-        passWord : "123567",
+        
     },
 
     Init : function()
@@ -15,23 +14,44 @@ var LoginCtrl = cc.Class({
         this.loginView.Init();
     },
 
-    StartRegist : function()
+    StartRegist : function(count, passWord)
     {
         console.log("开始注册玩家账号信息");
-        console.log(cc.Mgr.Config.resgisterUrl);
-        //var data = { userCount = this.userCount, passWord = this.passWord}
-        //cc.Mgr.Http.statics.sendRequest(url, data, OnRegist, extraUrl)
+        var url = `http://106.14.223.175:10000/root/gateway.action?command=user@createUser&userName=${count}&password=${passWord}`; 
+
+        console.log(url);
+        cc.Mgr.Http.SendAndRequest(url, this.OnRegist);
     },
 
     OnRegist : function(response)
     {
+        console.log("注册监听返回");
 
     },
 
-    StartLogin : function()
+    StartLogin : function(count, passWord)
     {
-        
+        console.log("玩家开始登陆");
+        var url = `http://106.14.223.175:10000/root/gateway.action?command=user@login&userName=${count}&password=${passWord}`; 
+        cc.Mgr.Http.SendAndRequest(url, this.OnLogin);
     }, 
+
+    OnLogin :function(response)
+    {
+        console.log("模拟登陆成功");
+        console.log(response);
+        var session = response.data.session
+        var url = `http://106.14.223.175:11000/root/gateway.action?command=player@getPlayerInfo&session=${session}`; 
+        cc.Mgr.Http.SendAndRequest(url, function(response){
+            console.log("完成登录进入游戏宝贝！！！");
+            cc.director.loadScene("MainScene");
+        }.bind(this));
+    },
+
+    EnterGame : function(response)
+    {
+        console.log("太令人伤心啦");
+    },
 
     Test : function()
     {

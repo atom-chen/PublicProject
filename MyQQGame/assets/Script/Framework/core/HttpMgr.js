@@ -55,5 +55,45 @@ var HttpMgr = cc.Class({
             xhr.send();
             return xhr;
         },
+
+        SendAndRequest : function(url, handler)
+        {
+            var xhr = cc.loader.getXMLHttpRequest();
+            xhr.timeout = 5000;
+
+            xhr.open("GET", url, true);
+
+            if (cc.sys.isNative){//是否是原生平台
+                xhr.setRequestHeader("Accept-Encoding","gzip,deflate","text/html;charset=UTF-8");
+            }
+            
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)){
+                    console.log("http res("+ xhr.responseText.length + "):" + xhr.responseText);
+                    try {
+                        var ret = JSON.parse(xhr.responseText);
+                        if(handler !== null){
+                            handler(ret);
+                        }
+                    } catch (e) {
+                        console.log("err:" + e);
+                    }
+                    finally{
+                        
+                    }
+                }
+            };
+
+            xhr.ontimeout = function(event){
+
+            },
+
+            xhr.onerror = function(event){
+                
+            },
+
+            xhr.send();
+            return xhr;
+        },
     },
 });
