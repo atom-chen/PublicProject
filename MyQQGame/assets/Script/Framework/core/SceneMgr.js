@@ -35,7 +35,7 @@ var SceneMgr = cc.Class({
     },
 
     GetCurScene: function(){
-        return self.curScene;
+        return this.curScene;
     },
 });
 module.exports = SceneMgr;

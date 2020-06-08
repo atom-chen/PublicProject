@@ -37,6 +37,9 @@ function initMgr(){
 
     var EventMgr = require("EventMgr");
     cc.Mgr.EventMgr = new EventMgr();
+
+    var SceneMgr = require("SceneMgr");
+    cc.Mgr.SceneMgr = new SceneMgr();
 }
 
 
