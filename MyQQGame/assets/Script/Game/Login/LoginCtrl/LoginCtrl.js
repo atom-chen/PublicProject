@@ -48,6 +48,12 @@ var LoginCtrl = cc.Class({
         }.bind(this));
     },
 
+    QQLogin : function()
+    {
+
+        console.log("开始QQ登陆");
+    },
+
     EnterGame : function(response)
     {
         console.log("太令人伤心啦");
