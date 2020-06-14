@@ -40,6 +40,10 @@ function initMgr(){
 
     var SceneMgr = require("SceneMgr");
     cc.Mgr.SceneMgr = new SceneMgr();
+
+    cc.Tools = {};
+    var AnimTool = require("AnimTool");
+    cc.Tools.AnimTool = new AnimTool();
 }
 
 
