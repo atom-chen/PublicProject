@@ -1,5 +1,5 @@
 var Panels = require("Panels");
-var Windows = require("Windows");
+//var Windows = require("Windows");
 
 var PanelMgr = cc.Class({
     
@@ -118,13 +118,14 @@ var PanelMgr = cc.Class({
         }
     },
 
-    OpenWindow(windowName, args, dependPanelName){
-        if(dependPanelName != this.currPanelName || dependPanelName != "Scene")
+    OpenWindow: function(windowName, args, dependPanelName){
+        if(dependPanelName != this.currPanelName && dependPanelName != "Scene")
         {
             console.log("PanelManager", "打开的窗口所依赖的PanelName与当前的PanelName不符合", this.currPanelName, dependPanelName);
             return;
         }
 
+        
         if(this.windowList[windwoName])
         {
             console.log("PanelManager", "打开的窗口已经存在", windowName, dependPanelName);

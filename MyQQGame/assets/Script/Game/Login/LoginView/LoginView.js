@@ -114,11 +114,11 @@ var LoginView = cc.Class({
         {
             //模拟登陆开始
             cc.loader.loadRes("LoginPanel", function (err, prefab) {
-                    var newNode = cc.instantiate(prefab);
-                    cc.director.getScene().addChild(newNode);
-                    this.loginPanel = newNode;
-                    newNode.setPosition(cc.v2(320, 568));
-                    this.AddButtonListener();
+        //             var newNode = cc.instantiate(prefab);
+        //             cc.director.getScene().addChild(newNode);
+        //             this.loginPanel = newNode;
+        //             newNode.setPosition(cc.v2(320, 568));
+        //             this.AddButtonListener();
                 }.bind(this));
         }
     },

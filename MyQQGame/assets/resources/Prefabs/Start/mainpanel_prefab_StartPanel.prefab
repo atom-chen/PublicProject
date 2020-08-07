@@ -246,7 +246,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "63k2338T5DaJNiHwO3PqGs",
     "sync": false
@@ -468,8 +468,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "开始游戏",
-    "_N$string": "开始游戏",
+    "_string": "选择章节",
+    "_N$string": "选择章节",
     "_fontSize": 36,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -492,7 +492,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "b3iusE2+RPCJBjSytMGgI4",
     "sync": false
@@ -562,7 +562,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "aa59TWzohFwKRWsGxdU6s1",
     "sync": false
@@ -657,7 +657,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "deY31QsndNiYqCyD5IYpuZ",
     "sync": false
@@ -668,7 +668,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "01eFPPd21BDJPx52DucrFI",
     "sync": false
@@ -706,7 +706,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "3ea53d1f-598d-4d3d-a8fe-84ba9710180e"
     },
     "fileId": "bb3ovXXARMa4sr8R5cbvxH",
     "sync": false
