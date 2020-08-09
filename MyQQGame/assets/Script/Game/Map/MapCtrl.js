@@ -120,8 +120,13 @@ cc.Class({
         console.log("弹出胜利面板");
         console.log(data);
 
-        let args = {};
-        args['data'] = data;
+        let args = {
+            data : data,
+            callBack : function(missionId){
+                this.CreatMap(missionId);
+            }.bind(this),
+        };
+        
         cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
     },
 
