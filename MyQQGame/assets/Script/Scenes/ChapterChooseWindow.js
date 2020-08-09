@@ -48,7 +48,7 @@ var ChapterChooseWindow = cc.Class({
             cc.find("Panel/TextName", chapterItem).getComponent(cc.Label).string = data.cities[k].cityName;
             var btn = cc.find("Panel/ImageBg", chapterItem);
             this.OnclickItem(btn, data.cities[k]);
-            cc.find("Panel/StarInfo", chapterItem).active = data.cities[k].missionNum > 0;
+            cc.find("Panel/StarInfo", chapterItem).active = data.cities[k] > 0;
         }
     },
 
@@ -56,7 +56,7 @@ var ChapterChooseWindow = cc.Class({
         this.BtnFunc(btn, function(){
             if (data.missionNum > 0)
             {
-                var args = {missionNum : data.missionNum,}
+                var args = {data : data,}
                 cc.Mgr.PanelMgr.OpenWindow('MissionChoose', args, 'Start');
             }
             else

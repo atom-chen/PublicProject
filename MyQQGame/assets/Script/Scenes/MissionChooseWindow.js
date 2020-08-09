@@ -7,7 +7,8 @@ var MissionChooseWindow = cc.Class({
     },
 
     ctor: function(args){
-        this.missionNum = args.missionNum;
+        this.data = args.data;
+        this.missionNum = this.data.missionNum;
     },  
 
     Create: function(){
@@ -35,14 +36,24 @@ var MissionChooseWindow = cc.Class({
                 missionItem.parent = content;
                 missionItem.name = i.toString();
             }
-            cc.find("Panel/TextMission", missionItem).getComponent(cc.Label).string = i;
-            var btn = cc.find("Panel/ImageBg", missionItem);
-            this.BtnFunc(btn, function(){
-
-                cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : "10102",});
-
-            }, this);
+            this.UpdateMissionItem(missionItem, i);
         }
+    },
+
+    UpdateMissionItem: function(obj, index){
+        cc.find("Panel/TextMission", obj).getComponent(cc.Label).string = index;
+        var btn = cc.find("Panel/ImageBg", obj);
+        var newIndex = "";
+        if (index < 10){
+            newIndex = "0" + index.toString();
+        }
+        else{
+            newIndex = index.toString()
+        }
+        var id = "1" + this.data.cityId + newIndex;
+        this.BtnFunc(btn, function(){
+            cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : id,});
+        }, this);
     },
 
     Close: function(){
