@@ -127,7 +127,9 @@ cc.Class({
             }.bind(this),
         };
         
-        cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
+        this.mapView.StartTrianAnim(() =>{
+            cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
+        });
     },
 
     //表现层关闭

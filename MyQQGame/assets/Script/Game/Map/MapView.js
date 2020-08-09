@@ -358,21 +358,24 @@ cc.Class({
         for (let index = 0; index < this.trialNodeList.length; index++) {
             var mapNode = this.trialNodeList[index];
             //检测轨道的点，装饰点不检测
-            if(mapNode.data.roadType > 0 && mapNode.data.roadPic > 0)
+            if(mapNode != null && mapNode.data != null && mapNode.data.roadType != null)
             {
-                if(mapNode.data.start || mapNode.data.end)
+                if(mapNode.data.roadType > 0 && mapNode.data.roadPic > 0)
                 {
-                    console.log("该点为起点或者终点不判断");
-                }
-                else
-                {
-                    if(mapNode.wayAllUse == false)
+                    if(mapNode.data.start || mapNode.data.end)
                     {
-                        console.log("有点所有出入口并没有都用");
-                        console.log(mapNode.data);
-                        isAllWaysUse = false;
-                        result = false
-                        break;
+                        console.log("该点为起点或者终点不判断");
+                    }
+                    else
+                    {
+                        if(mapNode.wayAllUse == false)
+                        {
+                            console.log("有点所有出入口并没有都用");
+                            console.log(mapNode.data);
+                            isAllWaysUse = false;
+                            result = false
+                            break;
+                        };
                     };
                 };
             };
