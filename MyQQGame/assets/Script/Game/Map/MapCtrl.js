@@ -19,8 +19,6 @@ cc.Class({
         this.args = args;
         this.CreateView();
         this.CreatMap(this.args.missionId);
-
-        //this.CreatMap("10102");
     },
 
     //创建表现层
@@ -122,11 +120,14 @@ cc.Class({
         console.log("弹出胜利面板");
         console.log(data);
 
-        let args = {};
-        args['data'] = data;
-        this.mapView.StartTrianAnim(() => {
-            cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
-        });
+        let args = {
+            data : data,
+            callBack : function(missionId){
+                this.CreatMap(missionId);
+            }.bind(this),
+        };
+        
+        cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
     },
 
     //表现层关闭
