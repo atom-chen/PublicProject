@@ -974,7 +974,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 491.6,
-      "height": 0
+      "height": 400
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1047,8 +1047,8 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 491.6,
-      "height": 0
+      "width": 300,
+      "height": 200
     },
     "_resize": 1,
     "_N$layoutType": 3,
@@ -1058,9 +1058,9 @@
       "height": 40
     },
     "_N$startAxis": 0,
-    "_N$paddingLeft": 14,
+    "_N$paddingLeft": 18,
     "_N$paddingRight": 0,
-    "_N$paddingTop": 10,
+    "_N$paddingTop": 17,
     "_N$paddingBottom": 10,
     "_N$spacingX": 10,
     "_N$spacingY": 10,

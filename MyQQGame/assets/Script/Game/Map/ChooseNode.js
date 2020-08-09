@@ -34,6 +34,7 @@ cc.Class({
         var pos = this.GetWorldPos();
         this.trial.setParent(this.canvas);
         this.SetWorldPos(pos);
+        this.trial.zIndex = 1;
     },
 
     TouchMove(t)
@@ -51,6 +52,7 @@ cc.Class({
         console.log("触摸内结束");
         this.trial.setParent(this.node);
         this.trial.setPosition(cc.v2(0, 0));
+        this.trial.zIndex = 0;
     },
 
     TouchCancel(t)

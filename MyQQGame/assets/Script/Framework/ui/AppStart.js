@@ -34,7 +34,6 @@ function initMgr(){
 
     var UserDataMgr = require("UserDataMgr");
     cc.Mgr.UserDataMgr = new UserDataMgr();
-    cc.Mgr.UserDataMgr.initData();
 
     var EventMgr = require("EventMgr");
     cc.Mgr.EventMgr = new EventMgr();

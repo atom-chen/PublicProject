@@ -25,6 +25,7 @@ cc.Class({
                 this.node = cc.instantiate(prefab);
                 this.canvas.addChild(this.node);
                 this.node.setPosition(cc.v2(9.048, -490));
+                this.node.zIndex = 1;
                 this.InitNodePool();
             }.bind(this));
         }
