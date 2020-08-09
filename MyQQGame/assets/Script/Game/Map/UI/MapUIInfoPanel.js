@@ -88,7 +88,8 @@ cc.Class({
         this.timeRecord.StopRecordTime();
     },
 
-    start () {
-
+    OnDestroy(){
+        this.node.destroy();
+        this.node = null;
     },
 });

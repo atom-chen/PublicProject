@@ -139,5 +139,10 @@ cc.Class({
      {
         this.node.active = false;
      },
+
+     OnDestroy(){
+        this.node.destroy();
+        this.node = null;
+    },
     // update (dt) {},
 });

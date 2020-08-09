@@ -37,7 +37,11 @@ var MissionChooseWindow = cc.Class({
             }
             cc.find("Panel/TextMission", missionItem).getComponent(cc.Label).string = i;
             var btn = cc.find("Panel/ImageBg", missionItem);
-            this.BtnFunc(btn, function(){}, this);
+            this.BtnFunc(btn, function(){
+
+                cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : "10101",});
+
+            }, this);
         }
     },
 

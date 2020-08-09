@@ -9,12 +9,16 @@ cc.Class({
     ctor : function()
     {
         console.log("mapCtrl 构造函数初始化");
-        //this.mapView = arguments[0];
+        this.mapPanel = arguments[0];
     },
 
-    onLoad () {
+    SetUp(args)
+    {
+        console.log("mapCtrl SetUp(args)");
+        console.log(args);
+        this.args = args;
         this.CreateView();
-        this.CreatMap("10301");
+        this.CreatMap(this.args.missionId);
     },
 
     //创建表现层
@@ -48,9 +52,9 @@ cc.Class({
     },
 
     //加载地图数据
-    LoadMap(missonId, callBack)
+    LoadMap(missionId, callBack)
     {
-        var jsonPath = "Json/MapJson/" + missonId + ".json";      //地图数据
+        var jsonPath = "Json/MapJson/" + missionId + ".json";      //地图数据
         cc.loader.loadRes(jsonPath, function(err, res) {
             if (err) {
                 console.log(err);
@@ -65,12 +69,12 @@ cc.Class({
     },
 
     //创建地图，包括UI, 选择的池子
-    CreatMap(missonId)
+    CreatMap(missionId)
     {
         if(this.mapConstJson == null)
         {
             this.LoadMapConst(function(){
-                this.LoadMap(missonId, function(){
+                this.LoadMap(missionId, function(){
                     this.mapView.Create();
                     this.chooseNodePool.Create();
                     this.mapUIInfoPanel.Create();
@@ -79,7 +83,7 @@ cc.Class({
         }
         else
         {
-            this.LoadMap(missonId, function(){
+            this.LoadMap(missionId, function(){
                 this.mapView.Create();
                 this.chooseNodePool.Create();
                 this.mapUIInfoPanel.Create();
@@ -127,12 +131,14 @@ cc.Class({
     BackClick()
     {
         console.log("从地图返回");
-        this.CloseMap();
+        cc.Mgr.PanelMgr.PopPanel();
     },
 
     Destroy()
     {
-
+        this.mapView.OnDestroy();
+        this.mapUIInfoPanel.OnDestroy();
+        this.chooseNodePool.OnDestroy();
     },
 
 });

@@ -22,5 +22,10 @@ var Panels = {
         //     'canvas': 'layer1',
         // },
     },
+
+    'Map':
+    {
+        'module': require("MapPanel"),
+    },
 };
 module.exports = Panels;
