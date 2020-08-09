@@ -35,7 +35,7 @@ var ChallengeResultWindow = cc.Class({
         cc.find("Window/WinPanel", this.ui).active = this.data.isWin;
         cc.find("Window/LosePanel", this.ui).active = !this.data.isWin;
         if (this.data.isWin){
-            cc.find("Window/WinPanel/ResultPanel/TextMission").getComponent(cc.Label).string = this.data.missionName;
+            cc.find("Window/WinPanel/ResultPanel/TextMission", this.ui).getComponent(cc.Label).string = this.data.missionName;
             for (var k in this.data.star){
                 var star = cc.find("Window/WinPanel/StarPanel/" + k.toString(), this.ui);
                 cc.find("ImageStar", star).active = this.data.star[k];
