@@ -39,7 +39,7 @@ var MissionChooseWindow = cc.Class({
             var btn = cc.find("Panel/ImageBg", missionItem);
             this.BtnFunc(btn, function(){
 
-                cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : "10101",});
+                cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : "10102",});
 
             }, this);
         }

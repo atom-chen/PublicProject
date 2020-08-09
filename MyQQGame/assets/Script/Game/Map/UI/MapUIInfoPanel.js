@@ -25,7 +25,7 @@ cc.Class({
                 this.node = cc.instantiate(prefab);
                 this.canvas.addChild(this.node);
                 this.node.setPosition(cc.v2(0, 0));
-    
+                this.node.zIndex = 3;
                 this.SetUIInfo();
             }.bind(this));
         }
@@ -43,7 +43,7 @@ cc.Class({
 
         console.log("设置章节信息");
         this.node.active = true;
-
+        console.log(this.node.parent.name);
         var chapterNameLabel = this.node.getChildByName("MapChapterLabel").getComponent(cc.Label);
         chapterNameLabel.string = this.mapJson.missionName;
 

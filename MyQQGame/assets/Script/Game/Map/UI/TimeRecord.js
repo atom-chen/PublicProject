@@ -54,7 +54,7 @@ cc.Class({
         return minutes + minuteName + seconds;
     },
 
-    update (dt) {
-        
-    },
+    // update (dt) {
+    //     console.log("我是一个大帅比");
+    // },
 });

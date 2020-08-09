@@ -131,7 +131,7 @@ cc.Class({
     BackClick()
     {
         console.log("从地图返回");
-        cc.Mgr.PanelMgr.PopPanel();
+        cc.Mgr.PanelMgr.ChangePanel("Start", {});
     },
 
     Destroy()
