@@ -71,9 +71,9 @@ cc.Class({
     {
         if(this.timeRecord.sceonds <= this.mapJson.starTime)
         {
-            return 1;
+            return true;
         };
-        return 0;
+        return false;
     },
 
     Open()

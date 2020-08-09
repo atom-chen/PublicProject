@@ -104,12 +104,21 @@ cc.Class({
     {
         this.mapUIInfoPanel.StopRecordTime();
         //ToDo:获取时间判定那颗星
-        var timeStar = this.mapUIInfoPanel.JudgeStar();
-        var mapStar = this.mapView.JudgeStar();
+        var timeResult = this.mapUIInfoPanel.JudgeStar();
+        var mapStarResult = this.mapView.JudgeStar();
 
-        var star = timeStar + mapStar;
+        let args = {};
+        args['isWin'] = true;
+        args['star'] = {};
+        args['star'][1] = true;
+        args['star'][2] = timeResult;
+        args['star'][3] = mapStarResult;
+
+        args.missionId = this.mapJson.missionId;
+        args.missionName = this.mapJson.missionName;
         //ToDo:弹出胜利面板
-        console.log("弹出胜利面板", star);
+        console.log("弹出胜利面板");
+        console.log(args);
     },
 
     //表现层关闭

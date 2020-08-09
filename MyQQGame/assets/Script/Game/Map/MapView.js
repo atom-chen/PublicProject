@@ -275,9 +275,8 @@ cc.Class({
     //评价通关星级,1-完成一星；2-在规定时间里一星；3-完美通关一星（总共三星, 这里不判断时间那个颗星）
     JudgeStar()
     {
-        var star = 1;
-
         //检测是否所有填充点都用到
+        var result = true;
         var isAllUse = true;
         for (let index = 0; index < this.playerFilldNodes.length; index++) {
             var mapNode = this.playerFilldNodes[index];
@@ -286,6 +285,7 @@ cc.Class({
                 console.log("填充点没有完全都用");
                 console.log(mapNode.data);
                 isAllUse = false;
+                result = false;
                 break;
             }
         };
@@ -308,18 +308,14 @@ cc.Class({
                         console.log("有点所有出入口并没有都用");
                         console.log(mapNode.data);
                         isAllWaysUse = false;
+                        result = false
                         break;
                     };
                 };
             };
         };
 
-        if(isAllUse && isAllWaysUse)
-        {
-            star = star + 1;
-        };
-
-        return star;
+        return result;
     },
 
      //清理当前的地图
