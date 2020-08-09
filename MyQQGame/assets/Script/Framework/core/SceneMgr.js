@@ -17,6 +17,11 @@ var SceneMgr = cc.Class({
         this.isChangeScene = true;
         this.curLoadingSceneName = sceneName;
         cc.director.loadScene(sceneName, function(){
+            this.InitScene(sceneName, args);
+        });
+    },
+
+    InitScene: function(sceneName, args){
             this.isChangeScene = false;
             this.curLoadingSceneName = null;
             this.preScene = this.curScene;
@@ -25,7 +30,6 @@ var SceneMgr = cc.Class({
             var scene = require(sceneName);
             this.curScene = new scene(args);
             this.curSceneName = sceneName;
-        });
     },
 
     PreLoadScene: function(sceneName, args){

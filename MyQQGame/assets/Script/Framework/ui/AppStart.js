@@ -41,6 +41,9 @@ function initMgr(){
     var SceneMgr = require("SceneMgr");
     cc.Mgr.SceneMgr = new SceneMgr();
 
+    var PanelMgr = require("PanelMgr");
+    cc.Mgr.PanelMgr = new PanelMgr;
+
     cc.Tools = {};
     var AnimTool = require("AnimTool");
     cc.Tools.AnimTool = new AnimTool();
@@ -90,6 +93,7 @@ cc.Class({
         var loginScene = require("LoginScene");
         var loginSceneInstance = new loginScene();
         loginSceneInstance.initLoginScene();
+        cc.Mgr.PanelMgr.ChangePanel("Start", {});
     },
 
     /*
