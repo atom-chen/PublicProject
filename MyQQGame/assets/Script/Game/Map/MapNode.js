@@ -162,6 +162,12 @@ cc.Class({
     //玩家拖拽时，填充点更新
     UpdateSurface(spriteFrame, chooseNodeData)
     {
+        if(chooseNodeData.roadType != this.data.roadType)
+        {
+            console.log("地形不符合");
+            return false;
+        }
+
         var surface = this.surfaceNode.getChildByName("Surface");
         surface.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         surface.rotation = - chooseNodeData.rotateZ;
@@ -172,6 +178,8 @@ cc.Class({
 
         //同时检测是否完成关卡
         this.mapView.StartCheckIsComplete();
+
+        return true;
     },
 
     onDestroy()

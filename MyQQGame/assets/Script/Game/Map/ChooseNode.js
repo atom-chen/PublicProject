@@ -82,10 +82,13 @@ cc.Class({
             {
                 console.log("检测到玩家需要填充的点");
                 var spriteFrame = this.trial.getComponent(cc.Sprite).spriteFrame;
-                playerFillNode.UpdateSurface(spriteFrame, this.chooseNodeData);
+                var result = playerFillNode.UpdateSurface(spriteFrame, this.chooseNodeData);
                 cc.chooseNode = this.node;
                 
-                this.chooseNodePool.UpdateNodePool();
+                if(result)
+                {
+                    this.chooseNodePool.UpdateNodePool();
+                };
                 return;
             };
         }
