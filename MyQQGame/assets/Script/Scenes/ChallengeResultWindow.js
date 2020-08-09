@@ -20,6 +20,7 @@ var ChallengeResultWindow = cc.Class({
 
     OnAllLoadCallBack: function(){
         this.ui = cc.instantiate(this.gameObjsTable.ui);
+        this.ui.zIndex = 4;
         var parent = cc.find("Canvas", cc.director.getScene());
         this.ui.parent = parent;
         this.ui.getComponent(cc.Widget).target = parent;
