@@ -10,7 +10,7 @@ var ChallengeResultWindow = cc.Class({
     ctor: function(args){
         this.data = args.data;
         this.assetAsynTable = {
-            'ui' : {'assetName' : "Prefabs/ChapterChoose/mainpanel_prefab_ChallengeResultWindow",},
+            'ui' : {'assetName' : "Prefabs/ChallengeResult/mainpanel_prefab_ChallengeResultWindow",},
         }
     },  
 

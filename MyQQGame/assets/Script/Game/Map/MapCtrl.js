@@ -107,18 +107,22 @@ cc.Class({
         var timeResult = this.mapUIInfoPanel.JudgeStar();
         var mapStarResult = this.mapView.JudgeStar();
 
-        let args = {};
-        args['isWin'] = true;
-        args['star'] = {};
-        args['star'][1] = true;
-        args['star'][2] = timeResult;
-        args['star'][3] = mapStarResult;
+        let data = {};
+        data['isWin'] = true;
+        data['star'] = {};
+        data['star'][1] = true;
+        data['star'][2] = timeResult;
+        data['star'][3] = mapStarResult;
 
-        args.missionId = this.mapJson.missionId;
-        args.missionName = this.mapJson.missionName;
+        data.missionId = this.mapJson.missionId;
+        data.missionName = this.mapJson.missionName;
         //ToDo:弹出胜利面板
         console.log("弹出胜利面板");
-        console.log(args);
+        console.log(data);
+
+        let args = {};
+        args['data'] = data;
+        cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
     },
 
     //表现层关闭

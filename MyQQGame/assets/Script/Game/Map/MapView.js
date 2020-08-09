@@ -59,7 +59,7 @@ cc.Class({
                 var newNode = cc.instantiate(prefab);
                 newNode.name = "col_" + toString(nodeData.col) + ":" + "row_" + toString(nodeData.row);
                 this.node.addChild(newNode);
-                newNode.setPosition(cc.v2(col * 80 - 280, row * 80 - 250));
+                newNode.setPosition(cc.v2(col * 80 - 280, row * 80 - 300));
                 var mapNode = newNode.getComponent("MapNode");
                 mapNode.CreateMapNode(nodeData, this.mapConstJson, this);
 
