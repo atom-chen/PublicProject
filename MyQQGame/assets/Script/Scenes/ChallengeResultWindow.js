@@ -40,7 +40,7 @@ var ChallengeResultWindow = cc.Class({
                 var star = cc.find("Window/WinPanel/StarPanel/" + k.toString(), this.ui);
                 cc.find("ImageStar", star).active = this.data.star[k];
                 var resultPanel = cc.find("Window/WinPanel/ResultPanel/Result" + k.toString(), this.ui);
-                this.UpdateResultStar(resultPanel, this.data.star[k]);
+                this.UpdateResult(resultPanel, this.data.star[k]);
             }
         }
         else
