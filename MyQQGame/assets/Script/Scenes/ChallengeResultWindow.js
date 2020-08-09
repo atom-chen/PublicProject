@@ -60,7 +60,6 @@ var ChallengeResultWindow = cc.Class({
                     var cityStr = city < 10 && ("0" + city.toString()) || city.toString();
                     var missionStr = mission < 10 && ("0" + mission.toString()) || mission.toString();
                     var id = country.toString() + cityStr.toString() + missionStr.toString();
-                    console.log("gjwgjw", id);
                     this.callBack(id);
                 }
             }.bind(this), this);
@@ -71,13 +70,14 @@ var ChallengeResultWindow = cc.Class({
         // }
     },
 
+    
     UpdateResult: function(obj, active){
         cc.find("ImageStar", obj).active = active;
         var sp = "Textures/Common/Bg/bg_4";
-        if(!data.star){
+        if(active){
             sp = "Textures/Common/Bg/bg_5";
         }
-        cc.resources.load(sp, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("ImageLine", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },
