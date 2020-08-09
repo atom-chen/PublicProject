@@ -1,6 +1,6 @@
 var BaseView = require("BaseView");
 var MapPanel = cc.Class({
-    extends: cc.BaseView,
+    extends: BaseView,
 
     ctor: function(){
         var ctrl = require("MapCtrl");
