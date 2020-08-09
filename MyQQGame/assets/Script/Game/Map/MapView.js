@@ -24,6 +24,7 @@ cc.Class({
         this.mapConstJson = this.ctrl.mapConstJson;
         this.mapJson = this.ctrl.mapJson;
         this.canvas = cc.find("Canvas");
+        
         this.mapNodePool = new Array();
         this.playerFilldNodes = new Array();
         if(this.node == null)
@@ -33,6 +34,7 @@ cc.Class({
                 this.node = cc.instantiate(prefab);
                 this.canvas.addChild(this.node);
                 this.node.setPosition(cc.v2(0, 0));
+                this.trian = this.node.getChildByName("Trian");
                 this.CreateMap();
             }.bind(this));
         }
@@ -46,6 +48,7 @@ cc.Class({
     CreateMap()
     {
         this.node.active = true;
+        this.trian.active = false;
         console.log(this.mapJson.missionName);
         cc.loader.loadRes("Prefabs/Map/MapNode", function(err,  prefab)
         {
@@ -106,6 +109,65 @@ cc.Class({
 
         //递归检测
         this.CheckIsComplete(this.startMapNode, exit)
+
+    },
+
+    StartTrianAnim(callBack)
+    {
+        this.moveIndex = 0;
+        this.PlayTrianAnim(callBack);
+    },
+
+    //播放火车动画
+    PlayTrianAnim(callBack)
+    {
+        var mapNode = this.trialNodeList[this.moveIndex];
+        console.log("检查火车链表数据");
+        console.log(this.trialNodeList);
+
+        if(mapNode != null)
+        {
+            if(this.moveIndex == 0)
+            {
+                this.trian.active = true;
+                this.trian.zIndex = 1;
+                this.trian.setPosition(cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300));
+                this.moveIndex = this.moveIndex + 1;
+                this.PlayTrianAnim(callBack);
+            }
+            else
+            {
+                this.SetRotation(mapNode);
+                cc.tween(this.trian)
+                    .to(0.15, { position: cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300)})
+                    .call(() => { 
+                        this.moveIndex = this.moveIndex + 1;
+                        this.PlayTrianAnim(callBack);
+                     })
+                    .start(() => {
+                        
+                    })
+            };
+        }
+        else
+        {
+            if(callBack != null)
+            {
+                callBack();
+            }
+            return;
+        }
+    },
+
+    SetRotation(mapNode)
+    {
+        var target = cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300)
+        var dx = target.x - this.trian.x;
+        var dy = target.y - this.trian.y;
+        var dir = cc.v2(dx,dy);
+        var angle = dir.signAngle(cc.v2(1,0));
+        var degree = angle / Math.PI * 180;
+        this.trian.rotation =  degree;
     },
 
     //检测是否通关,递归
@@ -152,6 +214,7 @@ cc.Class({
             if(mapNode.data.end == true)
             {
                 console.log("恭喜你已经通关");
+
                 this.ctrl.CompleteChater();
                 return;
             };
