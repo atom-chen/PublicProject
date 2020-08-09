@@ -31,6 +31,10 @@ var ChapterChooseWindow = cc.Class({
         cc.Tools.AnimTool.DOWindow(args);
     },
 
+    GetPalyerData: function(){
+        
+    },
+
     UpdateView: function(){
         var content = cc.find("Window/ScrollView/View/Content", this.ui)
         var data = ChapterData[1];
@@ -44,16 +48,21 @@ var ChapterChooseWindow = cc.Class({
             cc.find("Panel/TextName", chapterItem).getComponent(cc.Label).string = data.cities[k].cityName;
             var btn = cc.find("Panel/ImageBg", chapterItem);
             this.OnclickItem(btn, data.cities[k]);
+            cc.find("Panel/StarInfo", chapterItem).active = data.cities[k].missionNum > 0;
         }
     },
 
     OnclickItem: function(btn, data){
-        console.log("gjwgjw0", data);
         this.BtnFunc(btn, function(){
-            var args = {
-                missionNum : data.missionNum,
+            if (data.missionNum > 0)
+            {
+                var args = {missionNum : data.missionNum,}
+                cc.Mgr.PanelMgr.OpenWindow('MissionChoose', args, 'Start');
             }
-            cc.Mgr.PanelMgr.OpenWindow('MissionChoose', args, 'Start');
+            else
+            {
+                
+            }
         }, this);
     },
 

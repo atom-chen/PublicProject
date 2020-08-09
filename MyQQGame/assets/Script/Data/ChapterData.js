@@ -46,4 +46,5 @@ var ChapterData = {
         },
     },
 };
+
 module.exports = ChapterData;

@@ -6,5 +6,9 @@ var Windows = {
     'MissionChoose' : {
         'module' : require("MissionChooseWindow"),
     },
+
+    'ChallengeResult' : {
+        'module' : require("ChallengeResultWindow"),
+    },
 };
 module.exports = Windows;
