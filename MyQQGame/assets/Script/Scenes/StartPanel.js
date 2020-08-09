@@ -6,26 +6,32 @@ var StartPanel = cc.Class({
 
     },
 
-ctor: function(){
-    this.assetAsynTable = {
-        'ui' : {'assetName' : "Prefabs/Start/mainpanel_prefab_StartPanel"},
-    }
-},
-   
-Create: function(){
-    this.LoadAssetAsync();
-},
+    ctor: function(){
+        this.assetAsynTable = {
+            'ui' : {'assetName' : "Prefabs/Start/mainpanel_prefab_StartPanel"},
+        }
+    },
+    
+    Create: function(){
+        this.LoadAssetAsync();
+    },
 
-OnAllLoadCallBack: function(){
-    this.ui = cc.instantiate(this.gameObjsTable.ui);
-    cc.director.getScene().addChild(this.ui);
-    var btn = cc.find("Panel/BtnStart", this.ui)
-    this.BtnFunc(btn, this.OnclickChooseChapter, this);
-},
+    OnAllLoadCallBack: function(){
+        this.ui = cc.instantiate(this.gameObjsTable.ui);
+        var parent = cc.find("Canvas", cc.director.getScene());
+        this.ui.parent = parent;
+        var btn = cc.find("Panel/BtnStart", this.ui)
+        this.BtnFunc(btn, this.OnclickChooseChapter, this);
+    },
 
-OnclickChooseChapter: function(){
-    cc.Mgr.PanelMgr.OpenWindow("ChapterChoose", {}, "Start");
-},
+    OnclickChooseChapter: function(){
+        cc.Mgr.PanelMgr.OpenWindow("ChapterChoose", {}, "Start");
+    },
+
+    OnDestroy: function(){
+        this.ui.destroy();
+        this.ui = null;
+    },
 
 });
 module.exports = StartPanel;

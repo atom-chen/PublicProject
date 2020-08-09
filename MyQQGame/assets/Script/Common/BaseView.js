@@ -16,6 +16,7 @@ var BaseView = cc.Class({
         return listener;
     },
 
+    ///加载单个资源
     LoadAssetAsync: function(){
         var abTableItemNum = 0;
         for(var k in this.assetAsynTable) {
@@ -30,10 +31,20 @@ var BaseView = cc.Class({
                     this.assetAsynTable[k].callBack();
                 }
                 if (loadedCount == abTableItemNum){
-                    this.OnAllLoadCallBack()
+                    this.OnAllLoadCallBack();
                 }
             }.bind(this));
         };
+    },
+
+    ///加载同一文件夹下多个资源
+    LoadAssetsAsync: function(path){
+        cc.loader.loadResDir(path, function(err, assets){
+            for(k in assets){
+                this.gameObjsTable[assets[k].name] = assets[k];
+            }
+            this.OnAllLoadCallBack();
+        }.bind(this));
     },
 
     OnAllLoadCallBack: function(){

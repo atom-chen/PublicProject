@@ -1,5 +1,5 @@
 var Panels = require("Panels");
-//var Windows = require("Windows");
+var Windows = require("Windows");
 
 var PanelMgr = cc.Class({
     
@@ -126,7 +126,7 @@ var PanelMgr = cc.Class({
         }
 
         
-        if(this.windowList[windwoName])
+        if(this.windowList[windowName])
         {
             console.log("PanelManager", "打开的窗口已经存在", windowName, dependPanelName);
             this.CloseWindow(windowName);
@@ -136,7 +136,7 @@ var PanelMgr = cc.Class({
         if(openWindowConfig)
         {
             var module = openWindowConfig.module;
-            var window = new module();
+            var window = new module(args);
             this.windowList[windowName] = {'window': window, 'windowName': windowName, 'args': args};
             window.Create();
             console.log("PanelManager", "打开Window", windowName);
