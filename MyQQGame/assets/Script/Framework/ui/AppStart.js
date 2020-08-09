@@ -90,9 +90,9 @@ cc.Class({
         cc.Mgr.PlatformController.ShowClubButton(true);
 
         //初始化登陆场景
-        var loginScene = require("LoginScene");
-        var loginSceneInstance = new loginScene();
-        loginSceneInstance.initLoginScene();
+        // var loginScene = require("LoginScene");
+        // var loginSceneInstance = new loginScene();
+        // loginSceneInstance.initLoginScene();
         cc.Mgr.PanelMgr.ChangePanel("Start", {});
     },
 

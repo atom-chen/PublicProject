@@ -89,11 +89,18 @@ cc.Class({
     // 3-确定当前填充点的出口和入口，根据出口，确定下一个填充点，没有填充点则判断不通关，下一点为终点则通关，下一点为填充点跳转第二步；
     StartCheckIsComplete()
     {
+        if(this.trialNodeList == null)
+        {
+            this.trialNodeList = new Array();
+        };  
+        this.trialNodeList.splice(0, this.playerFilldNodes.length);
+        this.trialIndex = 0;
+
         var constNodeData = this.startMapNode.GetRoadConstData();
         var exit = constNodeData.ways[0].end;
 
         //清除所有的出入口记录
-        for (let index = 0; index < this.mapNodePool.length; index++) {
+        for (let index = 0; index < this.trialNodeList.length; index++) {
             this.mapNodePool[index].ClearWayRecord();
         }
 
@@ -104,9 +111,11 @@ cc.Class({
     //检测是否通关,递归
     CheckIsComplete(startMapNode, exit)
     {
-        
         if(startMapNode != null)
         {
+            this.trialNodeList[this.trialIndex] = startMapNode
+            this.trialIndex = this.trialIndex + 1;
+
             var data = startMapNode.data;
             if(startMapNode.data.playerFill)
             {
@@ -163,6 +172,7 @@ cc.Class({
         var constNodeData = mapNode.GetRoadConstData();
         if(constNodeData != null)
         {
+            console.log("下一个点为", mapNode.data.col, mapNode.data.row);
             for (let index = 0; index < constNodeData.ways.length; index++) {
                 var way = constNodeData.ways[index];
                 if(exit == 1)
@@ -282,8 +292,8 @@ cc.Class({
 
         //判断所有出入口是否用到（起点和终点不需要判断）
         var isAllWaysUse = true;
-        for (let index = 0; index < this.mapNodePool.length; index++) {
-            var mapNode = this.mapNodePool[index];
+        for (let index = 0; index < this.trialNodeList.length; index++) {
+            var mapNode = this.trialNodeList[index];
             //检测轨道的点，装饰点不检测
             if(mapNode.data.roadType > 0 && mapNode.data.roadPic > 0)
             {

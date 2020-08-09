@@ -14,7 +14,7 @@ cc.Class({
 
     onLoad () {
         this.CreateView();
-        this.CreatMap("10101");
+        this.CreatMap("10301");
     },
 
     //创建表现层
