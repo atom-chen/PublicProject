@@ -52,8 +52,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        0,
+        320,
+        568,
         0,
         0,
         0,
@@ -224,7 +224,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "4de2bcab-218a-40bc-baf2-f6271231f876"
+      "__uuid__": "13e66b77-5f87-459d-be38-74b1bffbd216"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -374,7 +374,7 @@
         1,
         1,
         1,
-        0
+        1
       ]
     },
     "_eulerAngles": {
@@ -513,7 +513,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "506e5311-8d01-475f-b6b9-a538d7f143c1"
+      "__uuid__": "07d796d4-0087-46d2-9b83-4526e5b2cf8b"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -628,9 +628,7 @@
       "b": 120,
       "a": 200
     },
-    "_N$normalSprite": {
-      "__uuid__": "506e5311-8d01-475f-b6b9-a538d7f143c1"
-    },
+    "_N$normalSprite": null,
     "_N$pressedSprite": {
       "__uuid__": "e9ec654c-97a2-4787-9325-e6a10375219a"
     },

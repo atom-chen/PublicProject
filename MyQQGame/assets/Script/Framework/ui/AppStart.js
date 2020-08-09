@@ -68,31 +68,31 @@ cc.Class({
         //cc.sys.localStorage.clear();
         // cc.director.GlobalEvent.clear();
         initMgr();
-        cc.loader.load("http://106.14.223.175:9000/0.0.0.1/1.jpg", function(err, ret){
-            if (err){
-                console.log("错误:", err);
-                return;
-            }
+        // cc.loader.load("http://106.14.223.175:9000/0.0.0.1/1.jpg", function(err, ret){
+        //     if (err){
+        //         console.log("错误:", err);
+        //         return;
+        //     }
             
-            console.log("调用", ret)
-            //this.sprite.node.active = false
-            let frame = new cc.SpriteFrame(ret);
-            console.log(frame)
-            this.sprite.spriteFrame = frame;
-        }.bind(this));
+        //     console.log("调用", ret)
+        //     //this.sprite.node.active = false
+        //     let frame = new cc.SpriteFrame(ret);
+        //     console.log(frame)
+        //     this.sprite.spriteFrame = frame;
+        // }.bind(this));
 
-        console.log("platform: " + cc.Mgr.PlatformController.platform);
+        // console.log("platform: " + cc.Mgr.PlatformController.platform);
     },
 
     start () {
-        //首先监听右上角的按钮
-        cc.Mgr.PlatformController.ShareTopNav();
-        cc.Mgr.PlatformController.ShowClubButton(true);
+        // //首先监听右上角的按钮
+        // cc.Mgr.PlatformController.ShareTopNav();
+        // cc.Mgr.PlatformController.ShowClubButton(true);
 
-        //初始化登陆场景
-        // var loginScene = require("LoginScene");
-        // var loginSceneInstance = new loginScene();
-        // loginSceneInstance.initLoginScene();
+        // //初始化登陆场景
+        // // var loginScene = require("LoginScene");
+        // // var loginSceneInstance = new loginScene();
+        // // loginSceneInstance.initLoginScene();
         cc.Mgr.PanelMgr.ChangePanel("Start", {});
     },
 
