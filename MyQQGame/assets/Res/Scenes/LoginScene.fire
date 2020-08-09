@@ -160,8 +160,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 960,
-      "height": 640
+      "width": 640,
+      "height": 1136
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -174,7 +174,7 @@
       "array": [
         0,
         0,
-        529.141521712292,
+        559.7501070772983,
         0,
         0,
         0,
@@ -241,7 +241,7 @@
       "__id__": 2
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 6
@@ -261,8 +261,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 640,
-      "height": 1136
+      "width": 720,
+      "height": 1280
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -296,7 +296,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "44r3AhxOdHb6Chg588Myaa"
+    "_id": "cdk/SgCmVDp5aOHPdeoRxq"
   },
   {
     "__type__": "cc.Sprite",
@@ -313,11 +313,9 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "8cdb44ac-a3f6-449f-b354-7cd48cf84061"
-    },
+    "_spriteFrame": null,
     "_type": 0,
-    "_sizeMode": 0,
+    "_sizeMode": 1,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -328,7 +326,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "6b2rLt37VANpmBClxo1RVI"
+    "_id": "d2BPAS2fdMAJthLW4Rj53x"
   },
   {
     "__type__": "cc.Widget",
@@ -341,10 +339,10 @@
     "alignMode": 1,
     "_target": null,
     "_alignFlags": 45,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_left": -40,
+    "_right": -40,
+    "_top": -72,
+    "_bottom": -72,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -353,9 +351,9 @@
     "_isAbsBottom": true,
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
-    "_originalWidth": 40,
-    "_originalHeight": 36,
-    "_id": "22WOzEwMtN2qGjsdp6KHhL"
+    "_originalWidth": 720,
+    "_originalHeight": 1280,
+    "_id": "1bB1Lc0sVOMIyWTicFQqP2"
   },
   {
     "__type__": "cc.Canvas",
@@ -471,9 +469,7 @@
       "__id__": 10
     },
     "_enabled": true,
-    "sprite": {
-      "__id__": 6
-    },
+    "sprite": null,
     "_id": "d4ux+SooJD5bdHuFDpo2+c"
   }
 ]

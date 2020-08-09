@@ -1,14 +1,15 @@
 
 var UICanvas = cc.Class({
+    extends: cc.Component,
 
-    ctor: function(callBack){
+    ctor: function(){
         cc.loader.loadRes("Prefabs/Common/UICanvas", cc.Prefab, function(err, prefab){
             this.canvas = cc.instantiate(prefab);
             this.canvas.name = "UICanvas";
             cc.director.getScene().addChild(this.canvas);
             this.cameraObj = cc.find("UICamera", this.canvas);
-            if (callBack){
-                callBack();
+            if (arguments[0]){
+                arguments[0]();
             }
         }.bind(this));
     },

@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "a39a9d17-c713-4bb7-9af7-47b699250b26",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 80,
+  "height": 80,
+  "platformSettings": {},
+  "subMetas": {
+    "map_zhuanshi_house6": {
+      "ver": "1.0.4",
+      "uuid": "9cf0debf-f080-4e42-a5f7-d6135d62ca4f",
+      "rawTextureUuid": "a39a9d17-c713-4bb7-9af7-47b699250b26",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0.5,
+      "trimX": 13,
+      "trimY": 4,
+      "width": 54,
+      "height": 71,
+      "rawWidth": 80,
+      "rawHeight": 80,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
