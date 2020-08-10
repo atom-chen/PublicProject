@@ -137,8 +137,8 @@ cc.Class({
             };
         }
 
-        console.log(this.mapJson.missionId, starNum);
-        cc.Mgr.UserDataMgr.UpdateuserData(this.mapJson.missionId, starNum);
+        console.log(this.mapJson.missionId.toString(), starNum);
+        cc.Mgr.UserDataMgr.UpdateuserData(this.mapJson.missionId.toString(), starNum);
         this.mapView.StartTrianAnim(() =>{
             cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
         });
