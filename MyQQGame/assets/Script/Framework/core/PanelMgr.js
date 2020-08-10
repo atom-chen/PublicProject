@@ -165,7 +165,8 @@ var PanelMgr = cc.Class({
     },
 
     CloseAllWindow: function(){
-        for(i in this.windowList)
+        console.log("关闭所有窗口", this.windowList);
+        for(var i in this.windowList)
         {
             var window = this.windowList[i];
             this.CloseWindow(window.windowName);

@@ -6,10 +6,10 @@ var LoginView = cc.Class({
         
     },
 
-    ctor : function(ctrl)
+    ctor : function()
     {
         console.log("loginView 构造函数初始化")
-        this.ctrl = ctrl;
+        this.ctrl = arguments[0];
     },
 
     Init : function() 

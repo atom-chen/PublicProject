@@ -23,7 +23,7 @@ var BaseView = cc.Class({
             abTableItemNum++;
         }
         var loadedCount = 0;
-        for (k in this.assetAsynTable){
+        for (var k in this.assetAsynTable){
             cc.loader.loadRes(this.assetAsynTable[k].assetName, function (err, prefab) {
                 this.gameObjsTable[k] = prefab;
                 loadedCount = loadedCount + 1;
@@ -40,7 +40,7 @@ var BaseView = cc.Class({
     ///加载同一文件夹下多个资源
     LoadAssetsAsync: function(path){
         cc.loader.loadResDir(path, function(err, assets){
-            for(k in assets){
+            for(var k in assets){
                 this.gameObjsTable[assets[k].name] = assets[k];
             }
             this.OnAllLoadCallBack();
@@ -81,7 +81,7 @@ var BaseView = cc.Class({
     OnDestroy: function(){},
 
     Destroy: function(){
-        for(k in this.listeners){
+        for(var k in this.listeners){
             cc.Mgr.EventMgr.RemoveEventListener(this.listeners[k][0], this.listeners[k][1]);
         };
         

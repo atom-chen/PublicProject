@@ -6,7 +6,8 @@ var MissionChooseWindow = cc.Class({
 
     },
 
-    ctor: function(args){
+    ctor: function(){
+        var args = arguments[0];
         this.data = args.data;
         this.missionNum = this.data.missionNum;
     },  
