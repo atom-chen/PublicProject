@@ -31,10 +31,6 @@ var ChapterChooseWindow = cc.Class({
         cc.Tools.AnimTool.DOWindow(args);
     },
 
-    GetPalyerData: function(){
-        
-    },
-
     UpdateView: function(){
         var content = cc.find("Window/ScrollView/View/Content", this.ui)
         var data = ChapterData[1];
@@ -45,27 +41,46 @@ var ChapterChooseWindow = cc.Class({
                 chapterItem.parent = content;
                 chapterItem.name = data.cities[k].cityId;
             }
-            cc.find("Panel/TextName", chapterItem).getComponent(cc.Label).string = data.cities[k].cityName;
-            var btn = cc.find("Panel/ImageBg", chapterItem);
-            this.OnclickItem(btn, data.cities[k]);
-            cc.find("Panel/StarInfo", chapterItem).active = data.cities[k] > 0;
+            this.UpdateItem(chapterItem, data.cities[k])
         }
+    },
+
+    UpdateItem: function(obj, data){
+        var cityData = {}
+        for (var k in cc.Mgr.UserDataMgr.userData.missionData){
+            if (cc.Mgr.UserDataMgr.userData.missionData[k].cityId == data.cityId){
+                cityData = cc.Mgr.UserDataMgr.userData.missionData[k];
+                break;
+            }
+        }
+        cc.find("Panel/TextName", obj).getComponent(cc.Label).string = data.cityName;
+        var btn = cc.find("Panel/ImageBg", obj);
+        this.OnclickItem(btn, cityData);
+        cc.find("Panel/StarInfo", obj).active = cityData.isOpen && data.missionNum > 0;
+        if (cityData.isOpen && data.missionNum > 0){
+            cc.find("Panel/StarInfo/TextInfo", obj).getComponent(cc.Label).string = cityData.star + "/" + data.maxStar;
+        }
+        var sp = cityData.isOpen && "Textures/Common/Bg/bg_7" || "Textures/Common/Bg/bg_11";
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+            cc.find("Panel/ImageBg", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
     },
 
     OnclickItem: function(btn, data){
         this.BtnFunc(btn, function(){
-            if (data.missionNum > 0)
+            if (data.isOpen > 0)
             {
+                console.log("gjwgjw", data);
                 var args = {data : data,}
                 cc.Mgr.PanelMgr.OpenWindow('MissionChoose', args, 'Start');
             }
             else
             {
-                
-            }
-        }, this);
-    },
 
+            }
+        }.bind(this), this);
+    },
+    
     Close: function(){
         var args = {
             window : this.ui,

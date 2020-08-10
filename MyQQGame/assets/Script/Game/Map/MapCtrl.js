@@ -71,6 +71,7 @@ cc.Class({
     //创建地图，包括UI, 选择的池子
     CreatMap(missionId)
     {
+        this.state = 0; //无状态
         if(this.mapConstJson == null)
         {
             this.LoadMapConst(function(){
@@ -102,6 +103,7 @@ cc.Class({
     //通关
     CompleteChater()
     {
+        this.state = 1; //结算状态
         this.mapUIInfoPanel.StopRecordTime();
         //ToDo:获取时间判定那颗星
         var timeResult = this.mapUIInfoPanel.JudgeStar();
@@ -111,7 +113,7 @@ cc.Class({
         data['isWin'] = true;
         data['star'] = {};
         data['star'][1] = true;
-        data['star'][2] = timeResult;
+        data['star'][2] = timeResult;   
         data['star'][3] = mapStarResult;
 
         data.missionId = this.mapJson.missionId;
@@ -127,11 +129,25 @@ cc.Class({
             }.bind(this),
         };
         
+        let starNum = 0;
+        for (let index = 1; index <= 3; index++) {
+            if(data.star[index] == true)
+            {
+                starNum = starNum + 1;
+            };
+        }
+
+        console.log(this.mapJson.missionId, starNum);
+        cc.Mgr.UserDataMgr.UpdateuserData(this.mapJson.missionId, starNum);
         this.mapView.StartTrianAnim(() =>{
             cc.Mgr.PanelMgr.OpenWindow("ChallengeResult", args, "Map");
         });
     },
 
+    CheckState()
+    {
+        return this.state;
+    },
     //表现层关闭
     CloseMap()
     {

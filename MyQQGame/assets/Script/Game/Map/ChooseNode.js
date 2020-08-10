@@ -18,6 +18,7 @@ cc.Class({
         this.chooseNodeData = chooseNodeData;
         this.chooseNodePool = chooseNodePool;
         this.mapView = this.chooseNodePool.ctrl.mapView;
+        this.ctrl = this.chooseNodePool.ctrl;
     },
 
     AddDragListener()
@@ -30,6 +31,10 @@ cc.Class({
 
     TouchStart(t)
     {
+        if(this.ctrl.CheckState() == 1)
+        {
+            return;
+        };
         console.log("触摸开始");
         var pos = this.GetWorldPos();
         this.trial.setParent(this.canvas);
@@ -39,6 +44,10 @@ cc.Class({
 
     TouchMove(t)
     {
+        if(this.ctrl.CheckState() == 1)
+        {
+            return;
+        };
         //定义一个n_pos变量存储当前触摸点的位置
         //var n_pos = t.getLocation();
         var n_pos = t.getLocation();
@@ -49,6 +58,10 @@ cc.Class({
 
     TouchEnd(t)
     {
+        if(this.ctrl.CheckState() == 1)
+        {
+            return;
+        };
         console.log("触摸内结束");
         this.trial.setParent(this.node);
         this.trial.setPosition(cc.v2(0, 0));
@@ -57,6 +70,10 @@ cc.Class({
 
     TouchCancel(t)
     {
+        if(this.ctrl.CheckState() == 1)
+        {
+            return;
+        };
         console.log("触摸外结束");
         //判断松开的时候是否在玩家需要填充的轨道上
         this.CheckIsInPlayerFillNode();

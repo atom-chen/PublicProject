@@ -41,8 +41,6 @@ var MissionChooseWindow = cc.Class({
     },
 
     UpdateMissionItem: function(obj, index){
-        cc.find("Panel/TextMission", obj).getComponent(cc.Label).string = index;
-        var btn = cc.find("Panel/ImageBg", obj);
         var newIndex = "";
         if (index < 10){
             newIndex = "0" + index.toString();
@@ -50,10 +48,40 @@ var MissionChooseWindow = cc.Class({
         else{
             newIndex = index.toString()
         }
-        var id = "1" + this.data.cityId + newIndex;
+        var missionId = "1" + this.data.cityId + newIndex;
+        var missionData = {}
+        for (var k in cc.Mgr.UserDataMgr.userData.missionData) {
+            var cityData = cc.Mgr.UserDataMgr.userData.missionData[k];
+            if (cityData.cityId == this.data.cityId)
+            {
+                for (var i in cityData.mission)
+                {
+                    if (cityData.mission[i].missionId == missionId){
+                        missionData = cityData.mission[i];
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        cc.find("Panel/StarPanel", obj).active = missionData.isOpen;
+        if(missionData.isOpen){
+            for (i = 1; i <= 3; i++){
+                cc.find("Panel/StarPanel/" + i.toString() + "/ImageStar", obj).active = i <= missionData.star;
+            }
+        }
+        var sp = missionData.isOpen && "Textures/Common/Bg/bg_7" || "Textures/Common/Bg/bg_11";
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+            cc.find("Panel/ImageBg", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
+        cc.find("Panel/TextMission", obj).getComponent(cc.Label).string = index;
+        var btn = cc.find("Panel/ImageBg", obj);
         this.BtnFunc(btn, function(){
-            cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : id,});
-        }, this);
+            if (missionData.isOpen)
+            {
+                cc.Mgr.PanelMgr.ChangePanel("Map", {missionId : missionId,});
+            }
+        }.bind(this), this);
     },
 
     Close: function(){
