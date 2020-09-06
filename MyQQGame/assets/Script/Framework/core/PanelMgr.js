@@ -169,7 +169,9 @@ var PanelMgr = cc.Class({
         for(var i in this.windowList)
         {
             var window = this.windowList[i];
-            this.CloseWindow(window.windowName);
+            if (window){
+                this.CloseWindow(window.windowName);
+            }
         }
         this.windowList = {};
     },
