@@ -36,9 +36,15 @@ var ChallengeResultWindow = cc.Class({
         // cc.find("Window/LosePanel", this.ui).active = !this.data.isWin;
         //if (this.data.isWin){
             cc.find("Window/WinPanel/ResultPanel/TextMission", this.ui).getComponent(cc.Label).string = this.data.missionName;
+            var star = 0;
+            for (var k in this.data.star){
+                if (this.data.star[k] == true){
+                    star += 1;
+                }
+            }
             for (var k in this.data.star){
                 var star = cc.find("Window/WinPanel/StarPanel/" + k.toString(), this.ui);
-                cc.find("ImageStar", star).active = this.data.star[k];
+                cc.find("ImageStar", star).active = k <= star;
                 var resultPanel = cc.find("Window/WinPanel/ResultPanel/Result" + k.toString(), this.ui);
                 this.UpdateResult(resultPanel, this.data.star[k]);
             }
@@ -78,7 +84,7 @@ var ChallengeResultWindow = cc.Class({
         if(active){
             sp = "Textures/Common/Bg/bg_5";
         }
-        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.resources.load(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("ImageLine", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },

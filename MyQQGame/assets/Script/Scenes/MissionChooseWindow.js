@@ -23,6 +23,8 @@ var MissionChooseWindow = cc.Class({
         this.ui.getComponent(cc.Widget).target = parent;
         var btn = cc.find("Window/BtnClose", this.ui)
         this.BtnFunc(btn, this.Close, this);
+        var btn = cc.find("Window/BtnClose2", this.ui)
+        this.BtnFunc(btn, this.Close, this);
         this.UpdateView();
         var args = { window : this.ui };
         cc.Tools.AnimTool.DOWindow(args);
@@ -66,16 +68,19 @@ var MissionChooseWindow = cc.Class({
             }
         }
         cc.find("Panel/StarPanel", obj).active = missionData.isOpen;
+        cc.find("Panel/TextMission", obj).active = missionData.isOpen;
+        cc.find("Panel/TextMission2", obj).active = !missionData.isOpen;
         if(missionData.isOpen){
             for (i = 1; i <= 3; i++){
                 cc.find("Panel/StarPanel/" + i.toString() + "/ImageStar", obj).active = i <= missionData.star;
             }
         }
-        var sp = missionData.isOpen && "Textures/Common/Bg/bg_7" || "Textures/Common/Bg/bg_11";
-        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+        var sp = missionData.isOpen && "Textures/Common/Bg/bg_20" || "Textures/Common/Bg/bg_19";
+        cc.resources.load(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("Panel/ImageBg", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         cc.find("Panel/TextMission", obj).getComponent(cc.Label).string = index;
+        cc.find("Panel/TextMission2", obj).getComponent(cc.Label).string = index;
         var btn = cc.find("Panel/ImageBg", obj);
         this.BtnFunc(btn, function(){
             if (missionData.isOpen)
