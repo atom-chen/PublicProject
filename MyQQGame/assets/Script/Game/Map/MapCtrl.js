@@ -82,6 +82,7 @@ cc.Class({
 
         let data = {};
         data['isWin'] = true;
+        data['starTime'] = this.mapJson.starTime;
         data['star'] = {};
         data['star'][1] = true;
         data['star'][2] = timeResult;   
