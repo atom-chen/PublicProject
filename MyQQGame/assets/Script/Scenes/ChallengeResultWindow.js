@@ -46,7 +46,7 @@ var ChallengeResultWindow = cc.Class({
                 var star = cc.find("Window/WinPanel/StarPanel/" + k.toString(), this.ui);
                 cc.find("ImageStar", star).active = k <= star;
                 var resultPanel = cc.find("Window/WinPanel/ResultPanel/Result" + k.toString(), this.ui);
-                this.UpdateResult(resultPanel, this.data.star[k]);
+                this.UpdateResult(resultPanel, this.data.star[k], k);
             }
             this.BtnFunc(cc.find("Window/WinPanel/BtnBack", this.ui), function(){
                 cc.Mgr.PanelMgr.ChangePanel("Start");
@@ -78,7 +78,7 @@ var ChallengeResultWindow = cc.Class({
     },
 
     
-    UpdateResult: function(obj, active){
+    UpdateResult: function(obj, active, index){
         cc.find("ImageStar", obj).active = active;
         var sp = "Textures/Common/Bg/bg_4";
         if(active){
@@ -87,6 +87,9 @@ var ChallengeResultWindow = cc.Class({
         cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("ImageLine", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
+        if (index == 2){
+            cc.find("Window/WinPanel/ResultPanel/Result2/TextCondition", this.ui).getComponent(cc.Label).string = "在" + this.data.starTime + "秒内完成关卡";
+        };
     },
 
     Close: function(){
