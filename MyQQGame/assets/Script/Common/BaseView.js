@@ -24,7 +24,8 @@ var BaseView = cc.Class({
         }
         var loadedCount = 0;
         for (var k in this.assetAsynTable){
-            cc.resources.load(this.assetAsynTable[k].assetName, function (err, prefab) {
+            console.log("异步加载资源");
+            cc.loader.loadRes(this.assetAsynTable[k].assetName, function (err, prefab) {
                 this.gameObjsTable[k] = prefab;
                 loadedCount = loadedCount + 1;
                 if (this.assetAsynTable[k].callBack){
@@ -39,7 +40,7 @@ var BaseView = cc.Class({
 
     ///加载同一文件夹下多个资源
     LoadAssetsAsync: function(path){
-        cc.resources.loadDir(path, function(err, assets){
+        cc.loader.loadResDir(path, function(err, assets){
             if (err)
             {
                 console.log("加载失败", err);

@@ -61,11 +61,11 @@ var ChapterChooseWindow = cc.Class({
             cc.find("Panel/StarInfo/TextInfo", obj).getComponent(cc.Label).string = cityData.star + "/" + data.maxStar;
         }
         var sp1 = cityData.isOpen && "Textures/Common/Bg/bg_18" || "Textures/Common/Bg/bg_17";
-        cc.resources.load(sp1, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes(sp1, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("Panel/ImageBg1", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         var sp2 = cityData.isOpen && "Textures/Common/Bg/bg_16" || "Textures/Common/Bg/bg_15";
-        cc.resources.load(sp2, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes(sp2, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("Panel/ImageBg2", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },

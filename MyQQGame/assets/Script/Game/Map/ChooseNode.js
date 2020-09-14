@@ -13,9 +13,9 @@ cc.Class({
         this.AddDragListener();
     },
 
-    Init(chooseNodeData, chooseNodePool)
+    Init(chooseRoad, chooseNodePool)
     {
-        this.chooseNodeData = chooseNodeData;
+        this.chooseRoad = chooseRoad;
         this.chooseNodePool = chooseNodePool;
         this.mapView = this.chooseNodePool.ctrl.mapView;
         this.ctrl = this.chooseNodePool.ctrl;
@@ -97,11 +97,11 @@ cc.Class({
             var disY = Math.abs(chooseNodeWorldPos.y - playerFillNodeWorldPos.y);
             
             console.log(disX, disY);
-            if(disX <=40 && disY <= 40)
+            if(disX <= 53.5 && disY <= 53.5)
             {
                 console.log("检测到玩家需要填充的点");
                 var spriteFrame = this.trial.getComponent(cc.Sprite).spriteFrame;
-                var result = playerFillNode.UpdateSurface(spriteFrame, this.chooseNodeData);
+                var result = playerFillNode.UpdateItem(spriteFrame, this.chooseRoad);
                 cc.chooseNode = this.node;
                 
                 if(result)

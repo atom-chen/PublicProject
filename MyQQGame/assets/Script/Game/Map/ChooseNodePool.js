@@ -24,8 +24,8 @@ cc.Class({
             {
                 this.node = cc.instantiate(prefab);
                 this.canvas.addChild(this.node);
-                this.node.setPosition(cc.v2(9.048, -490));
                 this.node.zIndex = 1;
+                this.refreshNum = 3;
                 this.InitNodePool();
             }.bind(this));
         }
@@ -47,71 +47,89 @@ cc.Class({
         this.chooseNodes[3] = this.node.getChildByName("ChooseNode4");
 
         this.UpdateWholePool();
+        this.SetUIInfo();
+        this.AddButtonListener();
+    },
+
+    SetUIInfo()
+    {
+        var switchNode = this.node.getChildByName("Switch");
+        switchNode.getChildByName("TimesLabel").getComponent(cc.Label).string = "剩余" + cc.Mgr.UserDataMgr.refreshTimes + "/" + "3";
+    },
+
+    AddButtonListener() {
+        console.log("添加按钮点击事件");
+        var switchNode = this.node.getChildByName("Switch");
+        var button = switchNode.getChildByName("SwitchBtn").getComponent(cc.Button)
+        button.node.on('click', this.ClickRefresh, this);
+    },
+
+    ClickRefresh()
+    {
+        if(cc.Mgr.UserDataMgr.refreshTimes <= 0) 
+        {
+            return;
+        };
+        cc.Mgr.UserDataMgr.refreshTimes = cc.Mgr.UserDataMgr.refreshTimes - 1;
+        this.UpdateWholePool();
+        this.SetUIInfo();
     },
 
     UpdateWholePool()
     {
         this.node.active = true;
-        this.chooseNodeDatas = this.ctrl.mapJson.chooseNodes;
+        this.chooseRoads = this.ctrl.mapJson.chooseRoads;
         this.mapConstData = this.ctrl.mapConstJson;
 
         for (let index = 0; index < this.chooseNodes.length; index++) {
-            var chooseNodeData = this.GetRandomChooseNode();
-            this.UpdateNode(chooseNodeData, this.chooseNodes[index]);
+            var chooseRoad = this.GetRandomChooseNode();
+            this.UpdateNode(chooseRoad, this.chooseNodes[index]);
         };
 
         //初始化下一个NextNode
-        var chooseNodeData = this.GetRandomChooseNode();
-        this.UpdateNode(chooseNodeData, this.chooseNextNode);
-        this.nextChooseNodeData = chooseNodeData;
+        var chooseRoad = this.GetRandomChooseNode();
+        this.UpdateNode(chooseRoad, this.chooseNextNode);
+        this.nextChooseRoad = chooseRoad;
     },
 
     //从池子里随机获取一个数据
     GetRandomChooseNode()
     {
-        var randomIndex = Math.floor(Math.random()* this.chooseNodeDatas.length); 
-        if(randomIndex >= this.chooseNodeDatas.length)
+        var randomIndex = Math.floor(Math.random()* this.chooseRoads.length); 
+        if(randomIndex >= this.chooseRoads.length)
         {
-            randomIndex = this.chooseNodeDatas.length - 1;
+            randomIndex = this.chooseRoads.length - 1;
         };
-
-        return this.chooseNodeDatas[randomIndex];
+        return this.chooseRoads[randomIndex];
     },
 
     //设置节点信息
-    UpdateNode(nodeData, node)
+    UpdateNode(chooseRoad, node)
     {
-        if(nodeData.roadType > 0) 
+        var picName = chooseRoad.pic;
+        console.log(picName);
+
+        var chooseNode = node.getComponent("ChooseNode")
+        if(chooseNode != null)
         {
-            var roadTypeKey = 'roadType' + nodeData.roadType;
-            var roadPicKey = 'roadPic' + nodeData.roadPic;
+            console.log("初始化池子小node")
+            chooseNode.Init(chooseRoad, this);
+        }
+        
+        var sp = "Textures/Map/MapNode/" + picName;
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+            var trial = node.getChildByName("Trial");
+            trial.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            trial.angle = chooseRoad.rotateZ;
+        }.bind(this));
 
-            var chooseNodeData = this.mapConstData[roadTypeKey][roadPicKey]
-            var surfaceSpName = chooseNodeData.pic;
-            console.log(surfaceSpName);
-
-            var chooseNode = node.getComponent("ChooseNode")
-            if(chooseNode != null)
-            {
-                console.log("初始化池子小node")
-                chooseNode.Init(chooseNodeData, this);
-            }
-            
-            //根据配置去取地图图片资源(这是地图节点surface的图片)
-            var path = "Textures/Map/MapNode/" + surfaceSpName;
-            cc.loader.loadRes(path, cc.SpriteFrame, function (err, spriteFrame) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                var trial = node.getChildByName("Trial");
-                trial.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                trial.setPosition(cc.v2(nodeData.offsetX, nodeData.offsetY));
-                trial.rotation = - chooseNodeData.rotateZ;
-
-
-            }.bind(this));
-        };
+        //根据配置去取地图图片资源(这是地图节点surface的图片)
+        // cc.Mgr.ResMgr.LoadAssetBundle(BundleName.MapNode, picName, cc.SpriteFrame, function(spriteFrame)
+        // {
+        //     var trial = node.getChildByName("Trial");
+        //     trial.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        //     trial.angle = chooseRoad.rotateZ;
+        // }.bind(this));
     },
 
     //拖拽之后更新
@@ -120,15 +138,15 @@ cc.Class({
         //根据数据更新当前的pool
         if(cc.chooseNode != null)
         {
-            this.UpdateNode(this.nextChooseNodeData, cc.chooseNode);
+            this.UpdateNode(this.nextChooseRoad, cc.chooseNode);
         };
         cc.chooseNode = null;
 
         //更新下一个点
         //初始化下一个NextNode
-        var chooseNodeData = this.GetRandomChooseNode();
-        this.UpdateNode(chooseNodeData, this.chooseNextNode);
-        this.nextChooseNodeData = chooseNodeData;
+        var chooseRoad = this.GetRandomChooseNode();
+        this.UpdateNode(chooseRoad, this.chooseNextNode);
+        this.nextChooseRoad = chooseRoad;
     },
 
     Open()

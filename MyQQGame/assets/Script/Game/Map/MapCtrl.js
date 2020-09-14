@@ -13,12 +13,13 @@ cc.Class({
     },
 
     SetUp(args)
-    {
+    {   
         console.log("mapCtrl SetUp(args)");
         console.log(args);
         this.args = args;
         this.CreateView();
         this.CreatMap(this.args.missionId);
+        //this.CreatMap('10101');
     },
 
     //创建表现层
@@ -34,27 +35,10 @@ cc.Class({
         this.mapUIInfoPanel = new mapUIInfoPanel(this);
     },
 
-    //加载配置数据
-    LoadMapConst(callBack)
-    {
-        var constJsonPath = "Json/MapJson/mapConst.json";   //地图配置
-        cc.loader.loadRes(constJsonPath, function(err, res) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            this.mapConstJson = res.json;
-            if(callBack != null)
-            {
-                callBack();
-            };
-        }.bind(this));
-    },
-
     //加载地图数据
     LoadMap(missionId, callBack)
     {
-        var jsonPath = "Json/MapJson/" + missionId + ".json";      //地图数据
+        var jsonPath = "Json/MapJson/" + missionId;      //地图数据
         cc.loader.loadRes(jsonPath, function(err, res) {
             if (err) {
                 console.log(err);
@@ -72,24 +56,11 @@ cc.Class({
     CreatMap(missionId)
     {
         this.state = 0; //无状态
-        if(this.mapConstJson == null)
-        {
-            this.LoadMapConst(function(){
-                this.LoadMap(missionId, function(){
-                    this.mapView.Create();
-                    this.chooseNodePool.Create();
-                    this.mapUIInfoPanel.Create();
-                }.bind(this));
-            }.bind(this));
-        }
-        else
-        {
-            this.LoadMap(missionId, function(){
-                this.mapView.Create();
-                this.chooseNodePool.Create();
-                this.mapUIInfoPanel.Create();
-            }.bind(this));
-        };
+        this.LoadMap(missionId, function(){
+            this.mapView.Create();
+            this.chooseNodePool.Create();
+            this.mapUIInfoPanel.Create();
+        }.bind(this));
     },
 
     //清理地图（数据层面上的清理,地图节点将会被清理）
@@ -148,6 +119,7 @@ cc.Class({
     {
         return this.state;
     },
+
     //表现层关闭
     CloseMap()
     {

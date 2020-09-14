@@ -17,7 +17,7 @@
         "__id__": 2
       },
       {
-        "__id__": 10
+        "__id__": 11
       }
     ],
     "_active": true,
@@ -81,10 +81,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 8
+        "__id__": 9
       },
       {
-        "__id__": 9
+        "__id__": 10
       }
     ],
     "_prefab": null,
@@ -174,7 +174,7 @@
       "array": [
         0,
         0,
-        542.116557096992,
+        395.76248729450845,
         0,
         0,
         0,
@@ -248,6 +248,9 @@
       },
       {
         "__id__": 7
+      },
+      {
+        "__id__": 8
       }
     ],
     "_prefab": null,
@@ -261,8 +264,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
-      "height": 1280
+      "width": 640,
+      "height": 1136
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -313,9 +316,11 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "32ca65d3-1f93-4cb0-9032-6d5960df8901"
+    },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -339,10 +344,10 @@
     "alignMode": 1,
     "_target": null,
     "_alignFlags": 45,
-    "_left": -40,
-    "_right": -40,
-    "_top": -72,
-    "_bottom": -72,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
@@ -354,6 +359,16 @@
     "_originalWidth": 720,
     "_originalHeight": 1280,
     "_id": "1bB1Lc0sVOMIyWTicFQqP2"
+  },
+  {
+    "__type__": "5e1ddVajxpEyoke4XLEwXSt",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
+    },
+    "_enabled": false,
+    "_id": "27FqzGb/9CSLkcpUb0Kwoe"
   },
   {
     "__type__": "cc.Canvas",
@@ -410,7 +425,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 12
       }
     ],
     "_prefab": null,
@@ -466,7 +481,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 10
+      "__id__": 11
     },
     "_enabled": true,
     "sprite": null,

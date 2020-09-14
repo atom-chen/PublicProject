@@ -37,7 +37,7 @@ cc.Class({
 
     SetUIInfo()
     {
-        this.mapConstJson = this.ctrl.mapConstJson;
+        //this.mapConstJson = this.ctrl.mapConstJson;
         this.mapJson = this.ctrl.mapJson;
         this.timeRecord = this.node.getComponent("TimeRecord");
 

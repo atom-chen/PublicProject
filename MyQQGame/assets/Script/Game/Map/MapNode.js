@@ -3,18 +3,15 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        floor : cc.Node,
-        surface : cc.Node,
-        posLabel : cc.Label,
         playerFilled : cc.Node,
+        imageItem : cc.Node,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad ()
     {
-        this.floorNode = this.node.getChildByName("FloorNode");
-        this.surfaceNode = this.node.getChildByName("SurfaceNode");
+        
     },
 
     start () {
@@ -22,68 +19,40 @@ cc.Class({
     },
 
     //创建mapNode节点，注：data为json数据, mapConstData地图配置文件
-    CreateMapNode(data, mapConstData, mapView)
+    CreateMapNode(data, mapView)
     {
         this.mapView = mapView;
-        this.mapConstData = mapConstData;
         this.data = data;
         this.UpdateNode();
-        this.UpdatePlayerFill();
         this.nodeWorldPosition = this.GetWorldPos();
     },
 
     UpdateNode()
     {
-        if(this.data.roadType > 0) 
+        var picName = this.data.mapItemData.pic;
+        //bundle加载
+        if(picName != null)
         {
-            var nodeData = this.GetThisRoadConstData();
-            var surfaceSpName = nodeData.pic;
-            console.log(surfaceSpName);
-            //根据配置去取地图图片资源(这是地图节点surface的图片)
-            var path = "Textures/Map/MapNode/" + surfaceSpName;
-            cc.loader.loadRes(path, cc.SpriteFrame, function (err, spriteFrame) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                
-                var surface = this.surfaceNode.getChildByName("Surface");
-                surface.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                surface.setPosition(cc.v2(this.data.offsetX, this.data.offsetY));
-                surface.rotation = - nodeData.rotateZ;
-                
-                
+            this.imageItem.active = true;
+            console.log("加载的图片", picName);
+            var sp = "Textures/Map/MapNode/" + picName;
+            cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+                this.imageItem.active = true;
+                this.imageItem.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                this.imageItem.angle = this.data.mapItemData.rotateZ;
+                this.UpdatePlayerFill();
             }.bind(this));
+            // cc.Mgr.ResMgr.LoadAssetBundle(BundleName.MapNode, picName, cc.SpriteFrame, function(spriteFrame)
+            // {
+            //     this.imageItem.active = true;
+            //     this.imageItem.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            //     this.imageItem.angle = this.data.mapItemData.rotateZ;
+            //     this.UpdatePlayerFill();
+            // }.bind(this));
         }
         else
         {
-            this.surfaceNode.active = false;
-        };
-
-        if(this.data.bgType > 0)
-        {
-            this.floorNode.active = true;
-            var bgData = this.GetThisBgConstData(this.data);
-            var bgName = bgData.pic;
-            
-            //根据配置去取地图图片资源(这是地图节点floor的图片)
-            var path = "Textures/Map/MapNode/" + bgName;
-            cc.loader.loadRes(path, cc.SpriteFrame, function (err, spriteFrame) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                
-                var floor = this.floorNode.getChildByName("Floor");
-                floor.getComponent(cc.Sprite).spriteFrame = spriteFrame
-
-                floor.rotation = - bgData.rotateZ;
-            }.bind(this));
-
-        }
-        else
-        {
-            this.floorNode.active = false;
+            this.imageItem.active = false;
         };
     },
 
@@ -98,46 +67,15 @@ cc.Class({
     RecordWay()
     {
         this.wayRecord = this.wayRecord + 1;
-        var constData = this.GetRoadConstData();
-        if(this.wayRecord >= constData.ways.length)
+        if(this.wayRecord == this.data.mapItemData.ways.length)
         {
             this.wayAllUse = true;
         };
     },
 
-
-    //获取配置信息(玩家填充的则是，返回玩家填充的信息)
-    GetRoadConstData()
+    GetMapItemData()
     {
-        if(this.data.playerFill)
-        {
-            if(this.fillData != null)
-            {
-                var roadTypeKey = 'roadType' + this.fillData.roadType;
-                var roadPicKey = 'roadPic' + this.fillData.roadPic;
-                return this.mapConstData[roadTypeKey][roadPicKey]
-            };
-            return null;
-        }
-
-
-        var roadTypeKey = 'roadType' + this.data.roadType;
-        var roadPicKey = 'roadPic' + this.data.roadPic;
-        return this.mapConstData[roadTypeKey][roadPicKey];
-    },
-
-    GetThisRoadConstData()
-    {
-        var roadTypeKey = 'roadType' + this.data.roadType;
-        var roadPicKey = 'roadPic' + this.data.roadPic;
-        return this.mapConstData[roadTypeKey][roadPicKey];
-    },
-
-    //获取配置信息
-    GetThisBgConstData()
-    {
-        var bgTypeKey = 'bgType' + this.data.bgType;
-        return this.mapConstData['bg'][bgTypeKey];
+        return this.data.mapItemData;
     },
 
     //填充点挖掉
@@ -145,36 +83,33 @@ cc.Class({
     {
         if(this.data.playerFill)
         {
-            this.surfaceNode.getChildByName("Surface").active = false;
-            if(this.data.roadType != 2)
-            {
-                this.playerFilled.active = true;
-            }
+            this.imageItem.active = false;
+            this.playerFilled.active = true;
         };
     },
 
     GetWorldPos()
     {
-        return this.surfaceNode.convertToWorldSpaceAR(cc.v2(0, 0));
+        return this.imageItem.convertToWorldSpaceAR(cc.v2(0, 0));
     },
 
 
     //玩家拖拽时，填充点更新
-    UpdateSurface(spriteFrame, chooseNodeData)
+    UpdateItem(spriteFrame, chooseRoad)
     {
-        if(chooseNodeData.roadType != this.data.roadType)
-        {
-            console.log("地形不符合");
-            return false;
-        }
-
-        var surface = this.surfaceNode.getChildByName("Surface");
-        surface.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        surface.rotation = - chooseNodeData.rotateZ;
-        surface.active = true;
+        // if(chooseRoad.itemType != this.data.mapItemData.itemType)
+        // {
+        //     console.log("地形不符合");
+        //     return false;
+        // }
+        this.imageItem.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        this.imageItem.angle = chooseRoad.rotateZ;
+        this.imageItem.active = true;
 
         //记录改填充点的所填充的节点信息
-        this.fillData = chooseNodeData;
+        this.data.mapItemData.ways = chooseRoad.ways;
+        this.fillData = this.data;
+        
 
         //同时检测是否完成关卡
         this.mapView.StartCheckIsComplete();

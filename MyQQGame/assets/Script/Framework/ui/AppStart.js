@@ -7,6 +7,7 @@ function initMgr(){
     cc.Mgr.preLoadingScene = false;
     cc.Mgr.initData = false;
     
+    cc.Mgr.ResMgr = require("ResManager");
     cc.Mgr.Event = require("Event");
     cc.Mgr.Utils = require("Utils");
     cc.Mgr.Config = require("Config");
@@ -19,9 +20,7 @@ function initMgr(){
     //平台控制管理类
     cc.Mgr.PlatformController = require("PlatformController");
     cc.Mgr.PlatformController.Init();
-    //广告
-    cc.Mgr.AdsMgr = require("AdsMgr");
-    cc.Mgr.AdsMgr.Init();
+
 
     var AudioMgr = require("AudioMgr");
     cc.Mgr.AudioMgr = new AudioMgr();
@@ -69,6 +68,9 @@ cc.Class({
         //cc.sys.localStorage.clear();
         // cc.director.GlobalEvent.clear();
         initMgr();
+        // cc.Mgr.ResMgr.LoadSubPacker(SubPackerName.Prefabs, function() {
+        //     console.log("加载分包", SubPackerName.Prefabs);
+        // });
         // cc.loader.load("http://106.14.223.175:9000/0.0.0.1/1.jpg", function(err, ret){
         //     if (err){
         //         console.log("错误:", err);
@@ -86,6 +88,7 @@ cc.Class({
     },
 
     start () {
+        //console.log(BundleName.Login);
         // //首先监听右上角的按钮
         // cc.Mgr.PlatformController.ShareTopNav();
         // cc.Mgr.PlatformController.ShowClubButton(true);

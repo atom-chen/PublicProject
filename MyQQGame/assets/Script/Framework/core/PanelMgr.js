@@ -168,17 +168,10 @@ var PanelMgr = cc.Class({
         console.log("关闭所有窗口", this.windowList);
         for(var i in this.windowList)
         {
-<<<<<<< HEAD
-            var window = this.windowList[i];
-            if (window && window.windowName){
-                this.CloseWindow(window.windowName);
-            }
-=======
             var window = this.windowList[i];
-            if (window){
+            if (window && window.windowName){
                 this.CloseWindow(window.windowName);
             }
->>>>>>> 5bdd47e17dbc5fb648b323905bf2ca72200b27dc
         }
         this.windowList = {};
     },

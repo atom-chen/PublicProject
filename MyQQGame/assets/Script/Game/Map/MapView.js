@@ -2,8 +2,10 @@
 cc.Class({
     extends: cc.Component,
 
+    
     properties: {
         chooseNode : cc.Node,
+        mapDis : 107,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -21,12 +23,12 @@ cc.Class({
     Create()
     {
         this.ClearMap();//创建之前先清理
-        this.mapConstJson = this.ctrl.mapConstJson;
         this.mapJson = this.ctrl.mapJson;
         this.canvas = cc.find("Canvas");
         
         this.mapNodePool = new Array();
         this.playerFilldNodes = new Array();
+        this.envItemPool = new Array();
         if(this.node == null)
         {
             cc.loader.loadRes("Prefabs/Map/MapScene", function(err,  prefab)
@@ -34,7 +36,13 @@ cc.Class({
                 this.node = cc.instantiate(prefab);
                 this.canvas.addChild(this.node);
                 this.node.setPosition(cc.v2(0, 0));
-                this.trian = this.node.getChildByName("Trian");
+                this.mapItems = this.node.getChildByName("MapItems")
+                this.trian = this.mapItems.getChildByName("Trian");
+                this.envLow = this.node.getChildByName("EnvLayerLow");
+                this.envHigh = this.node.getChildByName("EnvLayerHigh");
+                // cc.Mgr.ResMgr.LoadBundle(BundleName.MapNode, function(){
+                //     this.CreateMap();
+                // }.bind(this));
                 this.CreateMap();
             }.bind(this));
         }
@@ -50,41 +58,90 @@ cc.Class({
         this.node.active = true;
         this.trian.active = false;
         console.log(this.mapJson.missionName);
-        cc.loader.loadRes("Prefabs/Map/MapNode", function(err,  prefab)
+        cc.loader.loadRes("Prefabs/Map/MapItem", function(err,  prefab)
         {
-            var nodeDatas = this.mapJson.mapNodes
+            var mapRoads = this.mapJson.mapRoads
             var i = 0; //记录玩家填充点的index
-            for (let index = 0; index < nodeDatas.length; index++) 
+            for (let index = 0; index < mapRoads.length; index++) 
             {
-                var nodeData = nodeDatas[index];
-                var col = nodeData.col;
-                var row = nodeData.row;
+                var mapRoad = mapRoads[index];
+                var col = mapRoad.col;
+                var row = mapRoad.row;
                 var newNode = cc.instantiate(prefab);
-                newNode.name = "col_" + toString(nodeData.col) + ":" + "row_" + toString(nodeData.row);
-                this.node.addChild(newNode);
-                newNode.setPosition(cc.v2(col * 80 - 280, row * 80 - 300));
+                newNode.name = "col_" + toString(mapRoad.col) + ":" + "row_" + toString(mapRoad.row);
+                this.node.getChildByName("MapItems").addChild(newNode);
+                newNode.setPosition(cc.v2(col * this.mapDis - 268, row * this.mapDis - 515));
                 var mapNode = newNode.getComponent("MapNode");
-                mapNode.CreateMapNode(nodeData, this.mapConstJson, this);
+                mapNode.CreateMapNode(mapRoad, this);
 
                 this.mapNodePool[index] = mapNode;
-                if(nodeData.playerFill)
+                if(mapRoad.playerFill)
                 {
                     this.playerFilldNodes[i] = mapNode;
                     i = i + 1;
                 };
 
                 //找到起点和终点
-                if(nodeData.start == true)
+                if(mapRoad.start == true)
                 {
                     this.startMapNode = mapNode;
                 };
 
-                if(nodeData.end == true)
+                if(mapRoad.end == true)
                 {
                     this.endMapNode = mapNode;
                 };
             }
         }.bind(this));
+
+        this.AddMapEnvironment();
+    },
+
+    //创建地图环境
+    AddMapEnvironment()
+    {
+        //创建EnvLow
+        cc.loader.loadRes("Prefabs/Map/EnvItem", function(err,  prefab)
+        {
+            for (let index = 0; index < this.mapJson.mapLowEnv.length; index++) {
+                var envItem = cc.instantiate(prefab);
+                var lowEnvData = this.mapJson.mapLowEnv[index];
+                this.envLow.addChild(envItem);
+                this.CreateEnvItem(envItem, lowEnvData)
+            };
+        }.bind(this));
+
+        //创建EnvHigh
+        cc.loader.loadRes("Prefabs/Map/EnvItem", function(err,  prefab)
+        {
+            for (let index = 0; index < this.mapJson.mapHighEnv.length; index++) {
+                var envItem = cc.instantiate(prefab);
+                var highEnvData = this.mapJson.mapHighEnv[index];
+                this.envHigh.addChild(envItem);
+                
+                this.CreateEnvItem(envItem, highEnvData)
+            };
+        }.bind(this));
+    },
+
+    CreateEnvItem(envItem, envData)
+    {
+        envItem.setPosition(cc.v2(envData.x - 268, envData.y - 195));
+        envItem.angle = envData.mapEnvData.rotate;
+        envItem.setScale(envData.mapEnvData.scale);
+        var picName = envData.mapEnvData.pic
+
+        this.envItemPool.push(envItem);
+        var sp = "Textures/Map/MapNode/" + picName;
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
+            envItem.getChildByName("ImageItem").getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        }.bind(this));
+
+
+        // cc.Mgr.ResMgr.LoadAssetBundle(BundleName.MapNode, picName, cc.SpriteFrame, function(spriteFrame)
+        // {
+        //     envItem.getChildByName("ImageItem").getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
     },
 
     // 1-从轨道起始点开始检测, 根据起始点的出口，确定下一个点;
@@ -99,8 +156,8 @@ cc.Class({
         this.trialNodeList.splice(0, this.playerFilldNodes.length);
         this.trialIndex = 0;
 
-        var constNodeData = this.startMapNode.GetRoadConstData();
-        var exit = constNodeData.ways[0].end;
+        var mapItemData = this.startMapNode.data.mapItemData;
+        var exit = mapItemData.ways[0].end;
 
         //清除所有的出入口记录
         for (let index = 0; index < this.trialNodeList.length; index++) {
@@ -115,7 +172,8 @@ cc.Class({
     StartTrianAnim(callBack)
     {
         this.moveIndex = 0;
-        this.PlayTrianAnim(callBack);
+        //this.PlayTrianAnim(callBack);
+        this.trian.getComponent("Trian").Create(this.trialNodeList, callBack);
     },
 
     //播放火车动画
@@ -131,7 +189,7 @@ cc.Class({
             {
                 this.trian.active = true;
                 this.trian.zIndex = 1;
-                this.trian.setPosition(cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300));
+                this.trian.setPosition(cc.v2(mapNode.data.col * this.mapDis - 268, mapNode.data.row * this.mapDis - 515));
                 this.moveIndex = this.moveIndex + 1;
                 this.PlayTrianAnim(callBack);
             }
@@ -139,7 +197,7 @@ cc.Class({
             {
                 this.SetRotation(mapNode);
                 cc.tween(this.trian)
-                    .to(0.15, { position: cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300)})
+                    .to(0.15, { position: cc.v2(mapNode.data.col * this.mapDis - 268, mapNode.data.row * this.mapDis - 515)})
                     .call(() => { 
                         this.moveIndex = this.moveIndex + 1;
                         this.PlayTrianAnim(callBack);
@@ -155,13 +213,14 @@ cc.Class({
             {
                 callBack();
             }
+            this.trian.active = false;
             return;
         }
     },
 
     SetRotation(mapNode)
     {
-        var target = cc.v2(mapNode.data.col * 80 - 280, mapNode.data.row * 80 - 300)
+        var target = cc.v2(mapNode.data.col * this.mapDis - 268, mapNode.data.row * this.mapDis - 515)
         var dx = target.x - this.trian.x;
         var dy = target.y - this.trian.y;
         var dir = cc.v2(dx,dy);
@@ -181,18 +240,16 @@ cc.Class({
             var data = startMapNode.data;
             if(startMapNode.data.playerFill)
             {
-                startMapNode.fillData.col = data.col;
-                startMapNode.fillData.row = data.row;
                 data = startMapNode.fillData;
             };
 
             if(data == null)
             {
                 console.log("该点未被填充");
-                console.log(data.col, data.row);
+                return;
             };
 
-            console.log("当前点", exit);
+            console.log("当前点, col, row", data.col, data.row, exit);
             var mapNode = this.GetNextMapNodeByExit(data, exit);
             if(mapNode == null)
             {
@@ -201,7 +258,8 @@ cc.Class({
             };
         
             //步骤2
-            console.log("检测连接");
+            console.log("检测连接下一点", mapNode.data.col, mapNode.data.row);
+            console.log(mapNode.data);
             var result = this.CheckIsLinkComplete(mapNode, exit);
             if(result == false)
             {
@@ -232,12 +290,18 @@ cc.Class({
     CheckIsLinkComplete(mapNode, exit)
     {
         var newStartAndEnd = {};
-        var constNodeData = mapNode.GetRoadConstData();
-        if(constNodeData != null)
+        var mapItemData = mapNode.GetMapItemData();
+        if(mapItemData != null)
         {
+            if(mapItemData.ways == null)
+            {
+                return false;
+            };
+
             console.log("下一个点为", mapNode.data.col, mapNode.data.row);
-            for (let index = 0; index < constNodeData.ways.length; index++) {
-                var way = constNodeData.ways[index];
+            console.log(mapItemData);
+            for (let index = 0; index < mapItemData.ways.length; index++) {
+                var way = mapItemData.ways[index];
                 if(exit == 1)
                 {
                     if(way.start == 3)
@@ -318,13 +382,13 @@ cc.Class({
             col = col - 1;
         }else if(exit == 2)
         {
-            row = row + 1;
+            row = row - 1;
         }else if(exit == 3)
         {
             col = col + 1;
         }else if(exit == 4)
         {
-            row = row - 1;
+            row = row + 1;
         };
         for (let index = 0; index < this.mapNodePool.length; index++) {
             var mapNode = this.mapNodePool[index];
@@ -403,6 +467,18 @@ cc.Class({
         {
             this.playerFilldNodes.splice(0, this.playerFilldNodes.length);
         };  
+
+        if(this.envItemPool != null)
+        {
+            for (let index = 0; index < this.envItemPool.length; index++) {
+                var envItem = this.envItemPool[index];
+                if(envItem != null)
+                {
+                    envItem.destroy();
+                };
+            };
+            this.envItemPool.splice(0, this.envItemPool.length);
+        };
      },
 
      Close()

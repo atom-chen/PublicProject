@@ -95,5 +95,73 @@ var HttpMgr = cc.Class({
             xhr.send();
             return xhr;
         },
+
+        //文件下载函数
+        DownLoadBinary: function(item, callback)
+        {
+            console.log("加载远程资源")
+            var url = item.url;
+            var xhr = cc.loader.getXMLHttpRequest(), errInfo = "Load binary data failed: " + url;
+            xhr.open("GET", url, true);
+            xhr.responseType = item.type;
+            xhr.onload = function () {
+                var resp = xhr.response;
+                if (resp) {
+                    callback && callback(null, xhr.response);
+                } else callback && callback(errInfo + "(no response)");
+            };
+            xhr.onerror = function () {
+                callback && callback(errInfo + "(error)");
+            };
+            xhr.ontimeout = function () {
+                callback && callback(errInfo + "(time out)");
+            };
+            xhr.send(null);
+        },
+
+        //下载Zip
+        DownLoadZip(zipUrl)
+        {     
+            this.DownLoadBinary({ url: zipUrl, type: "arraybuffer" }, (err, data) => {
+                if (null == err)
+                {
+                    let u8Arr = new Uint8Array(data);
+                    //保存文件
+                    let path = jsb.fileUtils.getWritablePath() + "classes/res/";
+                    if (!jsb.fileUtils.isDirectoryExist(path)) {
+                        jsb.fileUtils.createDirectory(path);
+                    }
+                    let fPath = `${path}test.zip`;
+                    let rst = jsb.fileUtils.writeDataToFile(u8Arr, fPath)
+                    if (rst) {
+                        var testSp = this.node.getChildByName("testSp");
+                        if (testSp) {
+                            //解压压缩包
+                            window.ui_login_main = this;
+                            // 调用android 或者iOS 原生解压.zip
+                            deviceHelper.unzipFilePath("test", path, path, "ui_login_main.unzipCallback");
+                        }
+                        return;
+                    } 
+                    else 
+                    {
+                        cc.log("Blade:下载失败1")
+                    }
+                } 
+                else
+                {
+                    cc.log("Blade:下载失败2")
+                }
+            })
+        },
+
+        //解压加载 
+        UnzipCallback:function(cbData) {
+            cc.log("Blade:解压回调cbData:" + JSON.stringify(cbData));
+            // zip包里放了两个测试文件cover_def.png和testPng.json
+            let prePath = jsb.fileUtils.getWritablePath() + "classes/res/";
+            // 检测其中一个文件是否存在
+            cc.log("Blade:文件是否存在:" + jsb.fileUtils.isFileExist(prePath + "cover_def.png"));
+        },
     },
 });

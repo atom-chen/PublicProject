@@ -7,6 +7,7 @@ var UserDataMgr = cc.Class({
     properties:{
     	playTimes:cc.Integer,//游戏次数
 		playerName:"Alex",
+		refreshTimes : 3, //轨道刷新次数
 	},
 
 	initData:function () {

@@ -84,7 +84,7 @@ var ChallengeResultWindow = cc.Class({
         if(active){
             sp = "Textures/Common/Bg/bg_5";
         }
-        cc.resources.load(sp, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("ImageLine", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },

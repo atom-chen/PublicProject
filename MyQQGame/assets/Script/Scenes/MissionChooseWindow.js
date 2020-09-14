@@ -76,7 +76,7 @@ var MissionChooseWindow = cc.Class({
             }
         }
         var sp = missionData.isOpen && "Textures/Common/Bg/bg_20" || "Textures/Common/Bg/bg_19";
-        cc.resources.load(sp, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.loader.loadRes(sp, cc.SpriteFrame, function (err, spriteFrame) {
             cc.find("Panel/ImageBg", obj).getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         cc.find("Panel/TextMission", obj).getComponent(cc.Label).string = index;
