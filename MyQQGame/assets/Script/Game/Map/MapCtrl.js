@@ -55,6 +55,7 @@ cc.Class({
     //创建地图，包括UI, 选择的池子
     CreatMap(missionId)
     {
+        cc.Mgr.AudioMgr.closeSFX();
         this.state = 0; //无状态
         this.LoadMap(missionId, function(){
             this.mapView.Create();
@@ -82,7 +83,7 @@ cc.Class({
 
         let data = {};
         data['isWin'] = true;
-        data['starTime'] = this.mapJson.starTime;
+        data['starTime'] = this.mapJson.starTime.toString();
         data['star'] = {};
         data['star'][1] = true;
         data['star'][2] = timeResult;   

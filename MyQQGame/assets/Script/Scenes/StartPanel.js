@@ -13,6 +13,8 @@ var StartPanel = cc.Class({
     },
     
     Create: function(){
+        cc.Mgr.AudioMgr.closeSFX();
+        cc.Mgr.AudioMgr.playBGM("GameBegin");
         this.LoadAssetAsync();
     },
 

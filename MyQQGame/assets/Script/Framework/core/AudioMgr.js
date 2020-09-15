@@ -38,7 +38,7 @@ var AudioMgr = cc.Class({
 
     //获取需要播放某个音效用  根据名字来
     getUrl:function(url){
-        return cc.url.raw("resources/sound/" + url + ".mp3");
+        return cc.url.raw("resources/Audio/" + url + ".mp3");
     },
 
     //播放背景音乐
@@ -58,6 +58,15 @@ var AudioMgr = cc.Class({
         }
         this.soundAudioID = cc.audioEngine.play(audioUrl,false,this.sfxVolume);
     },
+
+    closeSFX:function()
+    {
+        if(this.soundAudioID >= 0)
+        {
+            cc.audioEngine.stop(this.soundAudioID);
+        }
+    },
+
     //设置音效大小
     setSFXVolume:function(v){
         if(this.sfxVolume != v){

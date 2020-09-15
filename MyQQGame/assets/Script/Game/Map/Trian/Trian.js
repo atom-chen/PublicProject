@@ -25,6 +25,8 @@ cc.Class({
         this.trialNodeList = trialNodeList;
         this.callBack = callBack;
         this.start = true;
+        cc.Mgr.AudioMgr.playSFX("TrainStart");
+        cc.Mgr.AudioMgr.playSFX("TarinRun");
         this.StartMove();
     },
 
@@ -48,7 +50,7 @@ cc.Class({
             {
                 this.SetRotation(mapNode);
                 cc.tween(this.trianNode1)
-                    .to(0.15, { position: cc.v2(mapNode.data.col * this.mapDis - 268, mapNode.data.row * this.mapDis - 515)})
+                    .to(0.5, { position: cc.v2(mapNode.data.col * this.mapDis - 268, mapNode.data.row * this.mapDis - 515)})
                     .call(() => { 
                         this.moveIndex = this.moveIndex + 1;
                         console.log("火车头的位置");

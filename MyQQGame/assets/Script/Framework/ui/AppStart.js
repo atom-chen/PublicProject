@@ -25,7 +25,7 @@ function initMgr(){
     var AudioMgr = require("AudioMgr");
     cc.Mgr.AudioMgr = new AudioMgr();
     cc.Mgr.AudioMgr.init();
-    // cc.Mgr.AudioMgr.playBGM("bgm");
+    cc.Mgr.AudioMgr.playBGM("GameBegin");
 
     var MapDataMgr = require("MapDataMgr");
     cc.Mgr.MapDataMgr = new MapDataMgr();
