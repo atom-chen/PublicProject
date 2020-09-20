@@ -8,6 +8,7 @@ cc.Class({
 
     ctor : function()
     {
+        this.refreshTime = 5;
         this.ctrl = arguments[0];  
     },
 
@@ -49,12 +50,30 @@ cc.Class({
         this.UpdateWholePool();
         this.SetUIInfo();
         this.AddButtonListener();
+        this.UpdateFreshTimes();
+    },
+
+    UpdateFreshTimes()
+    {
+        cc.Mgr.UpdateMgr.DelayTask(function(){
+            console.log("刷新按钮时间");
+            if(this.refreshTime <= 5 && this.refreshTime > 0)
+            {
+                this.refreshTime--;
+            };
+
+            this.SetUIInfo();
+        }.bind(this), 1);
     },
 
     SetUIInfo()
     {
         var switchNode = this.node.getChildByName("Switch");
-        switchNode.getChildByName("TimesLabel").getComponent(cc.Label).string = "剩余" + cc.Mgr.UserDataMgr.refreshTimes + "/" + "3";
+        switchNode.getChildByName("TimesLabel").getComponent(cc.Label).string = "剩余时间:" + this.refreshTime;
+        if(this.refreshTime == 0)
+        {
+            switchNode.getChildByName("TimesLabel").getComponent(cc.Label).string = "点击刷新";
+        };
     },
 
     AddButtonListener() {
@@ -66,13 +85,13 @@ cc.Class({
 
     ClickRefresh()
     {
-        if(cc.Mgr.UserDataMgr.refreshTimes <= 0) 
+        
+        if(this.refreshTime == 0)
         {
-            return;
+            this.refreshTime = 5;
+            this.UpdateWholePool();
+            this.SetUIInfo();
         };
-        cc.Mgr.UserDataMgr.refreshTimes = cc.Mgr.UserDataMgr.refreshTimes - 1;
-        this.UpdateWholePool();
-        this.SetUIInfo();
     },
 
     UpdateWholePool()

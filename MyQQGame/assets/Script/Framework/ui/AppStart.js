@@ -67,7 +67,9 @@ cc.Class({
         //目前我们先不保存任何数据  每次开始清理一次
         //cc.sys.localStorage.clear();
         // cc.director.GlobalEvent.clear();
+
         initMgr();
+        cc.Mgr.UpdateMgr = this.node.addComponent("UpdateMgr");
         // cc.Mgr.ResMgr.LoadSubPacker(SubPackerName.Prefabs, function() {
         //     console.log("加载分包", SubPackerName.Prefabs);
         // });
@@ -97,6 +99,7 @@ cc.Class({
         // // var loginScene = require("LoginScene");
         // // var loginSceneInstance = new loginScene();
         // // loginSceneInstance.initLoginScene();
+        
         cc.Mgr.PanelMgr.ChangePanel("Start", {});
     },
 
