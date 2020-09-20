@@ -93,7 +93,6 @@ cc.Class({
         return this.imageItem.convertToWorldSpaceAR(cc.v2(0, 0));
     },
 
-
     //玩家拖拽时，填充点更新
     UpdateItem(spriteFrame, chooseRoad)
     {

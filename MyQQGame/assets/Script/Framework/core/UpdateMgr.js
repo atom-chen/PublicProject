@@ -49,7 +49,6 @@ cc.Class({
         this.taskId = this.taskId + 1;
         this.schedule(function()   
         {
-            console.log("计时器回掉");
             if(this.taskJson[taskId] != null)
             {
                 this.taskJson[taskId]();
@@ -71,7 +70,6 @@ cc.Class({
         var taskId = this.taskId;
         this.taskId = this.taskId + 1;
         this.scheduleOnce(function(){
-            console.log("计时器回掉");
             if(this.taskJson[taskId] != null)
             {
                 this.taskJson[taskId]();

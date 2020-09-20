@@ -55,7 +55,7 @@ cc.Class({
 
     UpdateFreshTimes()
     {
-        cc.Mgr.UpdateMgr.DelayTask(function(){
+        this.taskId = cc.Mgr.UpdateMgr.DelayTask(function(){
             console.log("刷新按钮时间");
             if(this.refreshTime <= 5 && this.refreshTime > 0)
             {
@@ -179,6 +179,7 @@ cc.Class({
      },
 
      OnDestroy(){
+        cc.Mgr.UpdateMgr.CancelTask(this.taskId);
         this.node.destroy();
         this.node = null;
     },
